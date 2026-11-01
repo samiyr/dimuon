@@ -1,0 +1,8 @@
+version: 1
+start: 0
+end: 0
+observable: dis.differential.charm
+channels: dis-gm
+mode: scales17p
+scale: Q2+mc2
+dir: gm-Q2mc2

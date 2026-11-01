@@ -1,0 +1,6 @@
+version: 1
+observable: sidis.differential
+channels: sidis-gm
+mode: normal
+scale: Q2+mc2
+dir: gm-Q2mc2

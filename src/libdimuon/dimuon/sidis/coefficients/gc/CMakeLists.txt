@@ -1,0 +1,53 @@
+# These files are fragments of functions, not headers: they are installed but not verified
+target_sources(libdimuon
+	INTERFACE FILE_SET fragments FILES
+		F1C0q2qM.hpp
+		F1C1g2qM.hpp
+		F1C1q2gM.hpp
+		F1C1q2qM.hpp
+		F1C2g2gM.hpp
+		F1C2g2qM.hpp
+		F1C2q2gM.hpp
+		F1C2q2qM.hpp
+		F1C2q2qMFcon1.hpp
+		F1C2q2qMFcon2.hpp
+		F1C2q2qbM.hpp
+		F1C2q2qbMFcon.hpp
+		F1C2q2qpM1.hpp
+		F1C2q2qpM2.hpp
+		F2C0q2qM.hpp
+		F2C1g2qM.hpp
+		F2C1q2gM.hpp
+		F2C1q2qM.hpp
+		F2C2g2gM.hpp
+		F2C2g2qM.hpp
+		F2C2q2gM.hpp
+		F2C2q2qM.hpp
+		F2C2q2qMFcon1.hpp
+		F2C2q2qMFcon2.hpp
+		F2C2q2qbM.hpp
+		F2C2q2qbMFcon.hpp
+		F2C2q2qpM1.hpp
+		F2C2q2qpM2.hpp
+		F3C0q2qM.hpp
+		F3C1g2qM.hpp
+		F3C1q2gM.hpp
+		F3C1q2qM.hpp
+		F3C2g2qM.hpp
+		F3C2q2gM.hpp
+		F3C2q2qM.hpp
+		F3C2q2qMFcon1.hpp
+		F3C2q2qbM.hpp
+		F3C2q2qbMFcon.hpp
+		F3C2q2qpM1.hpp
+		F3C2q2qpM2.hpp
+		lo_cache.hpp
+		lo_decl.hpp
+		lo_vars.hpp
+		nlo_cache.hpp
+		nlo_decl.hpp
+		nlo_vars.hpp
+		nnlo_cache.hpp
+		nnlo_decl.hpp
+		nnlo_vars.hpp
+)

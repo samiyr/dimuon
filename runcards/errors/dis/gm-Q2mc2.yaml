@@ -1,0 +1,6 @@
+version: 1
+observable: dis.differential.charm
+channels: dis-gm
+mode: normal
+scale: Q2+mc2
+dir: gm-Q2mc2

@@ -1,0 +1,5 @@
+# Pool controller
+
+The Python pool controller can be used for production runs in a cluster. The `dimuon` driver is single-threaded, but runs across different e.g. kinematics are of course independent and therefore trivially parallelizable. The controller gathers the arguments into a list and maps over it in parallel, launching a `dimuon` process for each argument combination. The parallel map is done either using the built-in `multiprocessing` library (single-node) or the `mpi4py` library (multi-node with MPI).
+
+There are two main controllers, one for direct-mode runs (`dimuon_cross_sections.py`) and one for kernel-mode runs (`dimuon_interpolation_tables.py`). Information about the arguments can be found e.g. with `--help`. These arguments can also be read from a runcard file using `--config`.

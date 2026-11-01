@@ -1,0 +1,8 @@
+version: 3
+pdf-start: 0
+pdf-end: 0
+observable: sidis.differential
+channels: sidis-zm
+mode: scales17p
+scale: Q2+mc2
+dir: zm-Q2mc2

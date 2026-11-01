@@ -1,0 +1,23 @@
+target_sources(libdimuon
+	INTERFACE FILE_SET HEADERS FILES
+		channel_configuration.hpp
+		coefficient_implementation.hpp
+		constants.hpp
+		cross_section_functions.hpp
+		cross_section_observable.hpp
+		flavor.hpp
+		heavy_quark_thresholds.hpp
+		is_observable.hpp
+		mass_scheme.hpp
+		particle.hpp
+		parton_configuration.hpp
+		parton.hpp
+		partonic_channel_group.hpp
+		perturbative_order.hpp
+		perturbative_quantity.hpp
+		scale_dependence.hpp
+		scattering_process.hpp
+		splitting.hpp
+		structure_function.hpp
+		trf_kinematics.hpp
+)

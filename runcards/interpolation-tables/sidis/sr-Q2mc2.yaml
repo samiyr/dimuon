@@ -1,0 +1,7 @@
+version: 1
+channels: sidis-sr
+scale: Q2+mc2
+dir: sr-Q2mc2
+cuba-max-evals: 268435456
+pdf-knot-count: 75
+ff-knot-count: 75

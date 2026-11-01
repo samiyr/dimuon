@@ -1,0 +1,8 @@
+version: 2
+pdf-start: 0
+pdf-end: 0
+observable: sidis.differential
+channels: sidis-gm
+mode: scales7p
+scale: Q2+mc2
+dir: gm-Q2mc2

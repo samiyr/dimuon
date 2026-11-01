@@ -1,0 +1,12 @@
+const double c1t1 = p.c.nlo.c1t1;
+const double c2t1 = p.c.nlo.c2t1;
+const double c3t1 = p.c.nlo.c3t1;
+const double c4t1 = p.c.nlo.c4t1;
+const double c7t1 = p.c.nlo.c7t1;
+const double c8t1 = p.c.nlo.c8t1;
+const double c9t1 = p.c.nlo.c9t1;
+const double c13t1 = p.c.nlo.c13t1;
+const double c14t1 = p.c.nlo.c14t1;
+const double c15t1 = p.c.nlo.c15t1;
+const double c19t1 = p.c.nlo.c19t1;
+return ((c1t1*math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*math::power<-1>((1.+(-1.*p.z)))*p.ff*p.pdf)+(c2t1*math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*p.ff_hat*p.pdf)+(c3t1*math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*((math::power<-1>((1.+(-1.*p.zeta)))*((-1.*p.ff)+p.ff_hat))+(math::power<-1>((1.+(-1.*p.z)))*p.ff*std::log((1.+(-1.*p.z)))))*p.pdf)+(c4t1*math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*((logv1*math::power<-1>((1.+(-1.*p.zeta)))*((-1.*p.ff)+p.ff_hat))+((1./2.)*math::power<-1>((1.+(-1.*p.z)))*p.ff*math::power<2>(std::log((1.+(-1.*p.z))))))*p.pdf)+(c7t1*math::power<-1>((1.+(-1.*p.z)))*p.ff*p.pdf_hat)+(c8t1*p.ff_hat*p.pdf_hat)+(c9t1*((math::power<-1>((1.+(-1.*p.zeta)))*((-1.*p.ff)+p.ff_hat))+(math::power<-1>((1.+(-1.*p.z)))*p.ff*std::log((1.+(-1.*p.z)))))*p.pdf_hat)+(c13t1*math::power<-1>((1.+(-1.*p.z)))*p.ff*((math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*std::log((1.+(-1.*p.pdf_momentum_fraction)))*p.pdf)+(math::power<-1>((1.+(-1.*p.xi)))*((-1.*p.pdf)+p.pdf_hat))))+(c14t1*p.ff_hat*((math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*std::log((1.+(-1.*p.pdf_momentum_fraction)))*p.pdf)+(math::power<-1>((1.+(-1.*p.xi)))*((-1.*p.pdf)+p.pdf_hat))))+(c15t1*((math::power<-1>((1.+(-1.*p.zeta)))*((-1.*p.ff)+p.ff_hat))+(math::power<-1>((1.+(-1.*p.z)))*p.ff*std::log((1.+(-1.*p.z)))))*((math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*std::log((1.+(-1.*p.pdf_momentum_fraction)))*p.pdf)+(math::power<-1>((1.+(-1.*p.xi)))*((-1.*p.pdf)+p.pdf_hat))))+(c19t1*math::power<-1>((1.+(-1.*p.z)))*p.ff*(((1./2.)*math::power<-1>((1.+(-1.*p.pdf_momentum_fraction)))*math::power<2>(std::log((1.+(-1.*p.pdf_momentum_fraction))))*p.pdf)+(logv3*math::power<-1>((1.+(-1.*p.xi)))*((-1.*p.pdf)+p.pdf_hat)))));
