@@ -27,4 +27,4 @@ install(DIRECTORY examples DESTINATION ${CMAKE_INSTALL_DATADIR}/dimuon)
 # Install the runcards to <directory>/share/dimuon/runcards
 install(DIRECTORY runcards DESTINATION ${CMAKE_INSTALL_DATADIR}/dimuon)
 # Install the documentation to <directory>/share/doc/dimuon
-install(FILES numerical_evaluation.md DESTINATION ${CMAKE_INSTALL_DOCDIR})
+install(FILES numerical_evaluation.md README.md DESTINATION ${CMAKE_INSTALL_DOCDIR})

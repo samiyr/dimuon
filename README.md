@@ -46,7 +46,7 @@ To install, first run the configuration command in this directory
 ```
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=<installdir>
 ```
-where `<installdir>` is the location where the library will be installed. If necessary, pass on flags like `-DCUBA_ROOT=<cubadir>`. Other flags that can be used in the above command:
+where `<installdir>` is the location where the library will be installed. If necessary, pass on flags like `-DCUBA_ROOT=<cubadir>`. Other flags that can be used with the above command:
 - `-DDIMUON_NATIVE=OFF`: removes the `-march=native` flag (on by default)
 - `-DBUILD_DRIVER=OFF`: skips building the `dimuon` executable, in which case there's nothing to build in the next step (on by default)
 - `-DBUILD_TOOLS=ON`: builds the executables in the `tools` directory (off by default)
