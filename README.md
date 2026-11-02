@@ -105,3 +105,9 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=<installdir>
 cmake --build build
 ```
 which creates the executable `build/minimal_driver`. Note that `-DCMAKE_BUILD_TYPE=Release` is necessary for the optimizations to be enabled.
+
+# Available data
+
+Some of the data files are publicly available via [this link](https://a3s.fi/swift/v1/jyy2580-dimuon-pub/). The simplest way to use that link is to open it in a browser, which will give you a list of file paths. The link to an actual file is then obtained by appending a file path to the link above.
+
+The most relevant files are the ones in the `dimuon-data/pineappl` directory, which are the dimuon production interpolation tables in the [PineAPPL](https://zenodo.org/badge/latestdoi/248306479) format. For more information on how to use these PineAPPL grids, refer to the `README.md` in `tools/interpolation_tables`. 
