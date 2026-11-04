@@ -537,7 +537,7 @@ int run(const arg_parser &args) {
 							return compute_grid(vector_kernel_interface{linear_interpolation_basis{pdf_knots}}, vector_kernel_interface{linear_interpolation_basis{ff_knots}});
 						case interpolation_kernel::lagrange:
 						{
-							const auto log_mapping = [](const double x) { return std::log(x); };
+							const auto log_mapping = [](const double momentum_fraction) { return std::log(momentum_fraction); };
 							return compute_grid(
 								vector_kernel_interface{lagrange_interpolation_basis{pdf_knots, log_mapping}},
 								vector_kernel_interface{lagrange_interpolation_basis{ff_knots}}
