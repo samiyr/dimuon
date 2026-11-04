@@ -137,7 +137,7 @@ def create_arg_parser(run_mode:RunMode):
 		parser.add_argument("--pdf-knot-count", type=int, required=True, help="number of PDF interpolation knots")
 		parser.add_argument("--ff-knot-count", type=int, required=True, help="number of FF interpolation knots")
 		parser.add_argument(
-			"--interpolation-kernels", choices=["linear", "lagrange"], default="linear",
+			"--interpolation-kernels", choices=["linear", "lagrange"], required=True,
 			help="interpolation kernels: piecewise linear on lambertgrid knots, or Lagrange polynomials through all the knots (in ln x for the PDF, in z for the FFs) on Chebyshev-Lobatto knots"
 		)
 

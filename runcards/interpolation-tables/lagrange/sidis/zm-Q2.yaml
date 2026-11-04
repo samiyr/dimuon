@@ -1,7 +1,7 @@
 version: 1
 channels: sidis-zm
 scale: Q2
-dir: zm-Q2
+dir: lagrange/zm-Q2
 cuba-max-evals: 536870912
 pdf-knot-count: 25
 ff-knot-count: 15
