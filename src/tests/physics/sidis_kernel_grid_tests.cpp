@@ -13,6 +13,7 @@
 #include <dimuon/common/perturbative_order.hpp>
 #include <dimuon/common/perturbative_quantity.hpp>
 #include <dimuon/common/scattering_process.hpp>
+#include <dimuon/interpolation/lagrange_interpolation_basis.hpp>
 #include <dimuon/interpolation/linear_interpolation_basis.hpp>
 #include <dimuon/pdf/interface/functional_form_interface.hpp>
 #include <dimuon/pdf/interface/vector_kernel_interface.hpp>
@@ -40,11 +41,48 @@ namespace {
 		const double t = (x - knots[right - 1]) / (knots[right] - knots[right - 1]);
 		return (1.0 - t) * value(right - 1) + t * value(right);
 	}
+
+	double identity_mapping(const double x) { return x; }
+	double log_mapping(const double x) { return std::log(x); }
+
+	/// Lagrange interpolation of \p value(k) through all \p knots, using the product formula instead of barycentric weights
+	double lagrange_interpolate(const std::vector<double> &knots, const auto &mapping, const auto &value, const double x) {
+		if (x < knots.front() || x > knots.back()) { return 0.0; }
+		double sum = 0.0;
+		for (std::size_t k = 0; k < knots.size(); ++k) {
+			double polynomial = 1.0;
+			for (std::size_t j = 0; j < knots.size(); ++j) {
+				if (j != k) { polynomial *= (mapping(x) - mapping(knots[j])) / (mapping(knots[k]) - mapping(knots[j])); }
+			}
+			sum += polynomial * value(k);
+		}
+		return sum;
+	}
+
+	/// Checks that the kernel \p grid times the toy PDF and FF values at \p pdf_knots and \p ff_knots is \p direct in each physical channel
+	void expect_convolution(
+		const sidis::result &grid, const sidis::result &direct, const std::vector<double> &pdf_knots, const std::vector<double> &ff_knots, const double tolerance
+	) {
+		ASSERT_EQ(grid.channel_decomposition.extent(0), pdf_knots.size());
+		ASSERT_EQ(grid.channel_decomposition.extent(1), ff_knots.size());
+		ASSERT_TRUE(std::ranges::equal(grid.physical_channels, direct.physical_channels));
+
+		for (const perturbative_order pto : orders) {
+			for (const auto &[c, channel] : std::views::enumerate(grid.physical_channels)) {
+				double convolution = 0.0;
+				for (std::size_t k = 0; k < pdf_knots.size(); ++k) {
+					for (std::size_t l = 0; l < ff_knots.size(); ++l) {
+						convolution += grid.channel_decomposition[k, l, c].correction(pto) * toy_pdf(channel.initial_flavor, pdf_knots[k]) * toy_ff(channel.fragmentation_flavor, ff_knots[l]);
+					}
+				}
+				EXPECT_NEAR(convolution, (direct.channel_decomposition[0, 0, c].correction(pto)), tolerance * std::abs(direct.value.correction(pto)))
+					<< describe(channel) << ", order " << std::to_underlying(pto);
+			}
+		}
+	}
 }
 
-TEST(sidis_kernel_grid, convolution) {
-	// A kernel grid holds the cross section of each pair of interpolation kernels. For a PDF and an FF that are piecewise linear on the knots,
-	// the grid times their values at the knots is their cross section, in each physical channel. With plain QMC the integrands are equal at every point.
+TEST(sidis_kernel_grid, linear_convolution) {
 	const std::vector<double> pdf_knots{0.08, 0.12, 0.2, 0.35, 0.5, 0.7, 0.9, 1.0};
 	const std::vector<double> ff_knots{0.05, 0.1, 0.2, 0.35, 0.5, 0.7, 0.85, 1.0};
 	const functional_form_interface piecewise_linear_pdf{[&](const flavor::type f, const double x, const double) {
@@ -60,21 +98,27 @@ TEST(sidis_kernel_grid, convolution) {
 		const sidis::result grid = compute_sidis(
 			sidis_run{.process = process}, vector_kernel_interface{linear_interpolation_basis{pdf_knots}}, vector_kernel_interface{linear_interpolation_basis{ff_knots}}
 		);
-		ASSERT_EQ(grid.channel_decomposition.extent(0), pdf_knots.size());
-		ASSERT_EQ(grid.channel_decomposition.extent(1), ff_knots.size());
-		ASSERT_TRUE(std::ranges::equal(grid.physical_channels, direct.physical_channels));
+		expect_convolution(grid, direct, pdf_knots, ff_knots, 1e-10);
+	}
+}
 
-		for (const perturbative_order pto : orders) {
-			for (const auto &[c, channel] : std::views::enumerate(grid.physical_channels)) {
-				double convolution = 0.0;
-				for (std::size_t k = 0; k < pdf_knots.size(); ++k) {
-					for (std::size_t l = 0; l < ff_knots.size(); ++l) {
-						convolution += grid.channel_decomposition[k, l, c].correction(pto) * toy_pdf(channel.initial_flavor, pdf_knots[k]) * toy_ff(channel.fragmentation_flavor, ff_knots[l]);
-					}
-				}
-				EXPECT_NEAR(convolution, (direct.channel_decomposition[0, 0, c].correction(pto)), 1e-10 * std::abs(direct.value.correction(pto)))
-					<< describe(channel) << ", order " << std::to_underlying(pto);
-			}
-		}
+TEST(sidis_kernel_grid, lagrange_convolution) {
+	const std::vector<double> pdf_knots{0.08, 0.09, 0.12, 0.2, 0.35, 0.55, 0.75, 0.92, 1.0};
+	const std::vector<double> ff_knots{0.05, 0.08, 0.2, 0.4, 0.6, 0.8, 0.95, 1.0};
+	const functional_form_interface lagrange_pdf{[&](const flavor::type f, const double x, const double) {
+		return lagrange_interpolate(pdf_knots, log_mapping, [&](const std::size_t k) { return toy_pdf(f, pdf_knots[k]); }, x);
+	}};
+	const functional_form_interface lagrange_ff{[&](const flavor::type f, const double z, const double) {
+		return lagrange_interpolate(ff_knots, identity_mapping, [&](const std::size_t k) { return toy_ff(f, ff_knots[k]); }, z);
+	}};
+
+	for (const auto process : {neutrino, antineutrino}) {
+		SCOPED_TRACE(std::format("process {}", std::to_underlying(process)));
+		const sidis::result direct = compute_sidis(sidis_run{.process = process}, lagrange_pdf, lagrange_ff);
+		const sidis::result grid = compute_sidis(
+			sidis_run{.process = process},
+			vector_kernel_interface{lagrange_interpolation_basis{pdf_knots, log_mapping}}, vector_kernel_interface{lagrange_interpolation_basis{ff_knots}}
+		);
+		expect_convolution(grid, direct, pdf_knots, ff_knots, 1e-10);
 	}
 }

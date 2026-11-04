@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "dimuon/utility/collections.hpp"
-#include "dimuon/utility/shims.hpp" // IWYU pragma: keep (provides shims::views::slice, which clangd attributes to slice_view.hpp)
+#include "dimuon/utility/shims.hpp" // IWYU pragma: keep
 
 namespace dm {
 
@@ -26,6 +26,7 @@ using kernel_index = std::size_t;
 /// so that the sum of `f(knots[k])` times kernel `k` is the piecewise-linear interpolation of `f` over the whole range of the knots.
 class linear_interpolation_basis {
 public:
+	/// At most two kernels can be non-zero at any given point (see illustration of `linear_interpolation_basis::nonzero_at`)
 	static constexpr size_t maximum_kernels_per_point = 2;
 	/// Triangular kernel, which is one at `middle_knot` and falls linearly to zero at the knots on either side of it, and zero outside them.
 	/// A half kernel has no knot on one side. One of the edge knots (`left_knot` or `right_knot`) is equal to `middle_knot`.
@@ -96,6 +97,11 @@ public:
 		const diff_t end_idx = interval + 1;
 		
 		return kernels | shims::views::slice(start_idx, end_idx) | std::views::filter([x](const kernel &k) { return k.contains(x); });
+	}
+
+	/// Returns the values of the kernels that are non-zero at \p x (via `nonzero_at`) as a range of (index, value) pairs
+	auto values_at(const double x) const noexcept {
+		return nonzero_at(x) | std::views::transform([x](const kernel &k) { return std::pair{k.index, k(x)}; });
 	}
 
 private:

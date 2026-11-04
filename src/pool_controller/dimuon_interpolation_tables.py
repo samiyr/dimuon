@@ -37,6 +37,17 @@ def lambertgrid(x_min, x_max, n_points, reflected=False):
 
 	return np.array([inverse_relation(y) for y in np.linspace(y_min, y_max, n_points)])
 
+def lobattogrid(x_min, x_max, n_points, logarithmic=False):
+	"""
+	Chebyshev-Lobatto points from x_min to x_max (both included), evenly spaced in angle, so that they cluster towards both ends, in ln(x) if logarithmic.
+	These are the knots of the Lagrange kernels (--interpolation-kernels lagrange), which are polynomials through all the knots in the same variable.
+	"""
+	t_min, t_max = (np.log(x_min), np.log(x_max)) if logarithmic else (x_min, x_max)
+	t = t_min + (t_max - t_min) * (1 - np.cos(np.pi * np.arange(n_points) / (n_points - 1))) / 2
+	points = np.exp(t) if logarithmic else t
+	points[0], points[-1] = x_min, x_max
+	return points
+
 if __name__ == '__main__':
 	parser = arg_parser.create_arg_parser(RunMode.kernel)
 
@@ -61,8 +72,13 @@ if __name__ == '__main__':
 			"They should match the quark masses of the PDF set that the grids are convolved with."
 		)
 
-	pdf_knots = lambertgrid(1e-2, 9.999e-1, args.pdf_knot_count, reflected=False)
-	ff_knots = lambertgrid(1e-2, 9.9989e-1, args.ff_knot_count, reflected=True)
+	# The Lagrange kernels are polynomials in ln(x) for the PDF and in z for the FFs, which need knots that cluster towards the ends in the same variables
+	if args.interpolation_kernels == "lagrange":
+		pdf_knots = lobattogrid(1e-2, 9.999e-1, args.pdf_knot_count, logarithmic=True)
+		ff_knots = lobattogrid(1e-2, 9.9989e-1, args.ff_knot_count)
+	else:
+		pdf_knots = lambertgrid(1e-2, 9.999e-1, args.pdf_knot_count, reflected=False)
+		ff_knots = lambertgrid(1e-2, 9.9989e-1, args.ff_knot_count, reflected=True)
 
 	# Kinematical arguments based on passed args
 	if args.nutev and args.neutrino:

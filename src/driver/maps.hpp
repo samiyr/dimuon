@@ -17,6 +17,7 @@
 
 #include "run_mode.hpp"
 #include "output_mode.hpp"
+#include "interpolation_kernel.hpp"
 
 namespace maps {
 	/// Returns a map from the bidirectional map (see `dm::names`)
@@ -35,6 +36,11 @@ namespace maps {
 	static const std::unordered_map<std::string, output_mode> output_modes = {
 		{"stdout", output_mode::standard_output},
 		{"file", output_mode::file}
+	};
+
+	static const std::unordered_map<std::string, interpolation_kernel> interpolation_kernels = {
+		{"linear", interpolation_kernel::linear},
+		{"lagrange", interpolation_kernel::lagrange}
 	};
 
 	static const std::unordered_map<std::string, dm::perturbative_order> perturbative_orders = {

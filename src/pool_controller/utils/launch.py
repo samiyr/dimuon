@@ -109,6 +109,7 @@ def interpolation_table(arg_list):
 		"--resonance-particle", str(resonance),
 		"--pdf-knots", list_to_string(pdf_knots),
 		"--ff-knots", list_to_string(ff_knots),
+		"--interpolation-kernels", args.interpolation_kernels,
 		"--x", str(x),
 		"--y", str(y),
 		"--E", str(E),

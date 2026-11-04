@@ -50,7 +50,14 @@ static_assert(
 	is_scalar_pdf_interface<functional_form_interface<decltype([](const flavor::type, const double, const double) { return 0.0; })>>,
 	"Type `functional_form_interface` doesn't satisfy concept `is_scalar_pdf_interface`."
 );
-static_assert(is_vector_pdf_interface<vector_kernel_interface>, "Type `vector_kernel_interface` doesn't satisfy concept `is_vector_pdf_interface`.");
+static_assert(
+	is_vector_pdf_interface<vector_kernel_interface<linear_interpolation_basis>>,
+	"Type `vector_kernel_interface<linear_interpolation_basis>` doesn't satisfy concept `is_vector_pdf_interface`."
+);
+static_assert(
+	is_vector_pdf_interface<vector_kernel_interface<lagrange_interpolation_basis<>>>,
+	"Type `vector_kernel_interface<lagrange_interpolation_basis<>>` doesn't satisfy concept `is_vector_pdf_interface`."
+);
 
 }
 

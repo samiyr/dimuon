@@ -8,6 +8,7 @@
 #include <ranges>
 #include <span>
 #include <type_traits>
+#include <vector>
 
 #include "dimuon/common/constants.hpp"
 #include "dimuon/common/flavor.hpp"
@@ -58,7 +59,8 @@ namespace sidis {
 	/// at \p column_count momentum fractions: a matrix with a row for each kernel and a column for each momentum fraction, of which only the rows of the non-zero kernels
 	/// are kept. The kernels are the same for all flavors, so where the matrix of a parton distribution has a row for each flavor (see `parton_distribution_matrix`),
 	/// this one has a row for each kernel, and the values of every flavor are the whole matrix (see `rows`).
-	template <std::size_t column_count, std::size_t max_rows = linear_interpolation_basis::maximum_kernels_per_point * column_count>
+	/// @tparam kernel_interface_t Type of the kernels (a `vector_kernel_interface`), which gives the type of the columns
+	template <std::size_t column_count, typename kernel_interface_t>
 	class kernel_distribution_matrix {
 	public:
 		/// A row of the matrix: a kernel and its values at each momentum fraction
@@ -66,7 +68,7 @@ namespace sidis {
 			kernel_index index;
 			std::array<double, column_count> values;
 		};
-		using column_t = vector_kernel_interface::values;
+		using column_t = typename kernel_interface_t::values;
 
 		/// Constructs the matrix whose columns are \p column_values, sparse vectors over the kernels (see `is_vector_pdf_interface`):
 		/// a row for each kernel that is non-zero in any column
@@ -78,12 +80,16 @@ namespace sidis {
 		std::span<const row_t> rows(const flavor::type) const noexcept { return std::span{stored_rows}; }
 
 	private:
-		/// The rows of the non-zero kernels, in no particular order. At most two kernels are non-zero in each column (see `vector_kernel_interface::values`),
-		/// so a matrix has at most `2 * column_count` rows (more throw `std::bad_alloc`).
-		using storage_t = shims::inplace_vector<row_t, max_rows>;
+		/// The largest number of non-zero kernels in a column (see `vector_kernel_interface::values`), or `std::dynamic_extent` if it isn't limited by a constant
+		static constexpr std::size_t max_kernels_per_column = kernel_interface_t::maximum_kernels_per_point;
+		/// The rows of the non-zero kernels, in no particular order. If the maximum number of elements is known (which is the case for linear interpolation),
+		/// use an inplace vector. If it is not known (which is the case for Lagrange interpolation), use a vector.
+		using storage_t = std::conditional_t<
+			max_kernels_per_column == std::dynamic_extent, std::vector<row_t>, shims::inplace_vector<row_t, max_kernels_per_column * column_count>
+		>;
 
 		/// The rows of the non-zero kernels
-		const storage_t stored_rows;
+		storage_t stored_rows;
 
 		/// Returns the rows of the matrix whose columns are \p column_values: a row for each kernel that is non-zero in any column
 		static storage_t make_rows(const std::same_as<column_t> auto &...column_values) {
@@ -113,7 +119,9 @@ namespace sidis {
 		/// whose values are numbers (`parton_distribution_matrix`), and a row for each kernel for the interpolation kernels, whose values are vectors
 		/// that are the same for all flavors (`kernel_distribution_matrix`)
 		template <is_pdf_interface distribution_t, std::size_t columns>
-		using type = std::conditional_t<is_vector_pdf_interface<distribution_t>, kernel_distribution_matrix<columns>, parton_distribution_matrix<columns>>;
+		using type = std::conditional_t<
+			is_vector_pdf_interface<distribution_t>, kernel_distribution_matrix<columns, distribution_t>, parton_distribution_matrix<columns>
+		>;
 
 		/// @brief Returns the values of a PDF or FF at \p momentum_fraction for all flavors, or zero if \p momentum_fraction is above one
 		/// (i.e. where PDFs and FFs vanish). This gives the lower bounds of the convolution integrals, e.g. `z / zeta <= 1` for `zeta >= z`.

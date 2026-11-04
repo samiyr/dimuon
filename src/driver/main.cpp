@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -20,6 +21,7 @@
 #include "grids.hpp"
 #include "run_mode.hpp"
 #include "output_mode.hpp"
+#include "interpolation_kernel.hpp"
 
 #include <dimuon/pdf/interface/vector_kernel_interface.hpp>
 #include <dimuon/sidis/partonic_channel.hpp>
@@ -30,6 +32,7 @@
 #include <dimuon/coupling/ckm_matrix.hpp>
 
 #include <dimuon/interpolation/linear_interpolation_basis.hpp>
+#include <dimuon/interpolation/lagrange_interpolation_basis.hpp>
 
 #include <dimuon/utility/io.hpp>
 
@@ -111,8 +114,10 @@ int run(const arg_parser &args) {
 	// Read the observable and the run mode
 	const std::string observable_name = args.get_required_argument("observable");
 	const run_mode mode = args.get_required_choice_argument("run-mode", maps::run_modes);
-	if (mode == run_mode::kernel && observable_name != "sidis.differential") {
-		throw std::runtime_error("The kernel mode is only available for the observable sidis.differential");
+	const bool is_direct_mode = mode == run_mode::direct;
+	const bool is_kernel_mode = mode == run_mode::kernel;
+	if (is_kernel_mode && observable_name != "sidis.differential") {
+		throw std::runtime_error("Kernel mode is only available for the observable sidis.differential");
 	}
 
 	// Read the output mode: the results are printed to stdout (default), or written to a file whose path is printed (see `write_output`).
@@ -148,7 +153,7 @@ int run(const arg_parser &args) {
 	);
 	// The integration method: Suave (default), Vegas, or plain quasi-Monte Carlo in the direct mode.
 	// The kernel mode integrates with plain quasi-Monte Carlo.
-	common_integration_parameters.method = mode == run_mode::direct
+	common_integration_parameters.method = is_direct_mode
 		? args.get_choice_argument("integration-method", maps::integration_methods, integration_method::cuba_suave)
 		: integration_method::plain_qmc;
 	common_integration_parameters.cuba.vegas.starting_iterations = args.get_int_argument(
@@ -184,12 +189,14 @@ int run(const arg_parser &args) {
 
 	const unsigned int ff_member = args.get_unsigned_int_argument("ff-member", 0);
 
-	// The kernel mode computes all interpolation kernels in one run, in place of the PDF and the FFs (see `vector_kernel_interface`),
-	// with the decays of a single resonance. The kernels are those of piecewise-linear interpolation on the given knots, one for each knot.
-	// They are integrated with plain quasi-Monte Carlo, with --cuba-max-evals points.
-	const std::vector<double> pdf_knots = mode == run_mode::kernel ? args.get_required_double_list("pdf-knots") : std::vector<double>{};
-	const std::vector<double> ff_knots = mode == run_mode::kernel ? args.get_required_double_list("ff-knots") : std::vector<double>{};
-	const std::optional<particle> resonance_particle = mode == run_mode::kernel
+	// Read interpolation kernel options
+	const std::vector<double> pdf_knots = is_kernel_mode ? args.get_required_double_list("pdf-knots") : std::vector<double>{};
+	const std::vector<double> ff_knots = is_kernel_mode ? args.get_required_double_list("ff-knots") : std::vector<double>{};
+
+	const std::optional<interpolation_kernel> kernel_type = is_kernel_mode
+		? std::make_optional(args.get_required_choice_argument("interpolation-kernels", maps::interpolation_kernels))
+		: std::nullopt;
+	const std::optional<particle> resonance_particle = is_kernel_mode
 		? std::make_optional(args.get_required_choice_argument("resonance-particle", maps::resonance_particles))
 		: std::nullopt;
 
@@ -217,7 +224,7 @@ int run(const arg_parser &args) {
 
 		return pdf;
 	};
-	const std::optional<lha_interface<>> pdf = mode == run_mode::direct ? std::make_optional(make_pdf()) : std::nullopt;
+	const std::optional<lha_interface<>> pdf = is_direct_mode ? std::make_optional(make_pdf()) : std::nullopt;
 
 	// Read process type
 	const bool neutrino = args.get_flag("neutrino");
@@ -347,7 +354,7 @@ int run(const arg_parser &args) {
 	args.check_arguments();
 
 	if (observable_name == "dis.differential.charm" || observable_name == "dis.differential.total") {
-		if (mode != run_mode::direct) {
+		if (!is_direct_mode) {
 			throw std::runtime_error("Only direct mode is supported with DIS");
 		}
 
@@ -521,10 +528,24 @@ int run(const arg_parser &args) {
 				// The kernels don't depend on the FF sets, so the per-flavor multipliers of the FF sets (see `grids::create_grid_fragmentation`) are not applied.
 				const auto resonance_decays = grids::create_resonance_decays(*resonance_particle);
 				const auto decays = resonance_decays(min_E, constants::particles::massless_muon, parametrization, process);
-				const vector_kernel_interface ff_kernels{linear_interpolation_basis{ff_knots}};
-				const auto sidis_instance = make_instance(vector_kernel_interface{linear_interpolation_basis{pdf_knots}}, std::vector(decays.size(), ff_kernels), decays);
-
-				const sidis::result grid = sidis_instance.lepton_pair_cross_section_xy(kinematics);
+				const auto compute_grid = [&](const auto &pdf_kernels, const auto &ff_kernels) {
+					return make_instance(pdf_kernels, std::vector(decays.size(), ff_kernels), decays).lepton_pair_cross_section_xy(kinematics);
+				};
+				const sidis::result grid = [&] {
+					switch (*kernel_type) {
+						case interpolation_kernel::linear:
+							return compute_grid(vector_kernel_interface{linear_interpolation_basis{pdf_knots}}, vector_kernel_interface{linear_interpolation_basis{ff_knots}});
+						case interpolation_kernel::lagrange:
+						{
+							const auto log_mapping = [](const double x) { return std::log(x); };
+							return compute_grid(
+								vector_kernel_interface{lagrange_interpolation_basis{pdf_knots, log_mapping}},
+								vector_kernel_interface{lagrange_interpolation_basis{ff_knots}}
+							);
+						}
+					}
+					std::unreachable();
+				}();
 
 				write_output(output, output_file, [&](std::ostream &stream) {
 					// The kinematics and the scales
