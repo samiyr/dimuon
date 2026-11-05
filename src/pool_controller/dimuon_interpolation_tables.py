@@ -19,29 +19,19 @@ import gzip
 from pathlib import Path
 from utils.arg_modes import RunMode
 
-def lambertgrid(x_min, x_max, n_points, reflected=False):
+def lambertgrid(x_min, x_max, n_points):
 	def direct_relation(x):
-		if reflected:
-			return 5 * x - np.log(1 - x)
-		else:
-			return 5 * (1 - x) - np.log(x)
+		return 5 * (1 - x) - np.log(x)
 
 	def inverse_relation(y):
-		if reflected:
-			return np.real((1 / 5) * (5 - lambertw(5 * np.exp(5 - y))))
-		else:
-			return np.real(1 / 5 * lambertw(5 * np.exp(5 - y)))
-			
+		return np.real(1 / 5 * lambertw(5 * np.exp(5 - y)))
+
 	y_min = direct_relation(x_min)
 	y_max = direct_relation(x_max)
 
 	return np.array([inverse_relation(y) for y in np.linspace(y_min, y_max, n_points)])
 
-def lobattogrid(x_min, x_max, n_points, logarithmic=False):
-	"""
-	Chebyshev-Lobatto points from x_min to x_max (both included), evenly spaced in angle, so that they cluster towards both ends, in ln(x) if logarithmic.
-	These are the knots of the Lagrange kernels (--interpolation-kernels lagrange), which are polynomials through all the knots in the same variable.
-	"""
+def chebyshevgrid(x_min, x_max, n_points, logarithmic=False):
 	t_min, t_max = (np.log(x_min), np.log(x_max)) if logarithmic else (x_min, x_max)
 	t = t_min + (t_max - t_min) * (1 - np.cos(np.pi * np.arange(n_points) / (n_points - 1))) / 2
 	points = np.exp(t) if logarithmic else t
@@ -63,7 +53,7 @@ if __name__ == '__main__':
 	elif not args.nutev and not args.ccfr:
 		raise ValueError("One of the flags --nutev or --ccfr has to be included with dimuon_interpolation_tables.py")
 
-	# The CC program computes NNLO if there are NNLO channels, and then it needs the thresholds, since it has no PDF to take them from
+	# The dimuon program computes NNLO if there are NNLO channels, and then it needs the thresholds, since it has no PDF to take them from
 	nnlo_channels = any(argument.startswith("--nnlo-") for argument in constants.get_channels(args.neutrino, args))
 	if nnlo_channels and None in [args.charm_threshold, args.bottom_threshold, args.top_threshold]:
 		raise ValueError(
@@ -72,13 +62,13 @@ if __name__ == '__main__':
 			"They should match the quark masses of the PDF set that the grids are convolved with."
 		)
 
-	# The Lagrange kernels are polynomials in ln(x) for the PDF and in z for the FFs, which need knots that cluster towards the ends in the same variables
-	if args.interpolation_kernels == "lagrange":
-		pdf_knots = lobattogrid(1e-2, 9.999e-1, args.pdf_knot_count, logarithmic=True)
-		ff_knots = lobattogrid(1e-2, 9.9989e-1, args.ff_knot_count)
+	# Interpolation grid nodes
+	if args.interpolation_kernels == "global_lagrange":
+		pdf_knots = chebyshevgrid(1e-2, 9.999e-1, args.pdf_knot_count, logarithmic=True)
+		ff_knots = chebyshevgrid(1e-2, 9.9989e-1, args.ff_knot_count)
 	else:
-		pdf_knots = lambertgrid(1e-2, 9.999e-1, args.pdf_knot_count, reflected=False)
-		ff_knots = lambertgrid(1e-2, 9.9989e-1, args.ff_knot_count, reflected=True)
+		pdf_knots = lambertgrid(1e-2, 9.999e-1, args.pdf_knot_count)
+		ff_knots = np.linspace(1e-2, 9.9989e-1, args.ff_knot_count)
 
 	# Kinematical arguments based on passed args
 	if args.nutev and args.neutrino:

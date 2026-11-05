@@ -965,7 +965,9 @@ All the kernel values are computed and contained in `sidis::parton_values`.
 
 ## Choice of kernels and knots
 
-The simplest interpolation is linear interpolation, where the kernel is a triangular hat function. Linear interpolation is sufficient for the task at hand, so that is the kernel used and implemented in `linear_interpolation_basis`. Linear interpolation kernels have the advantage that at any given point, only a maximum of two kernels contribute to that point:
+### Linear interpolation
+
+The simplest interpolation is linear interpolation (`linear_interpolation_basis`), where the kernel is a triangular hat function. Linear interpolation kernels have the advantage that at any given point, only a maximum of two kernels contribute to that point:
 ```
 																				
                               │                                                   
@@ -982,7 +984,29 @@ The simplest interpolation is linear interpolation, where the kernel is a triang
 ```
 A single kernel is defined by three points: left point $x_l$, middle point $x_m$, and right point $x_r$ with $x_l\leq x_m\leq x_r$. The kernel obtains the value 1 at $x_m$, goes linearly to zero on both sides at $x_l$ and $x_r$, and is zero outside the interval $[x_l, x_r]$. At the edges of the interpolation grid, half-kernels are used where either $x_l=x_m$ or $x_r=x_m$, and there is only one slope.
 
-The interpolation grid (i.e. the knots) is defined by the [Lambert grid](https://eko.readthedocs.io/en/latest/modules/eko/eko.html#eko.interpolation.lambertgrid), which transitions smoothly from logarithmic spacing near 0 to linear spacing near 1. This grid is used for PDFs. For FFs, a modified version where the roles of 0 and 1 are switched is used instead. This is because the behaviour of FFs near the endpoints differs qualitatively from the behaviour of PDFs. 
+The interpolation grid (i.e. the knots) is defined by the [Lambert grid](https://eko.readthedocs.io/en/latest/modules/eko/eko.html#eko.interpolation.lambertgrid), which transitions smoothly from logarithmic spacing near 0 to linear spacing near 1. This grid is used for PDFs only. FFs use a uniform grid.
+
+### Lagrange interpolation
+
+Lagrange interpolation uses the Lagrange kernels
+```math
+\begin{equation}
+\phi_i(x)=\prod_{\substack{0\leq j\leq N \\ j\neq i}} \frac{x-x_j}{x_i-x_j}
+\end{equation}
+```
+which build up the unique degree-$N$ polynomials that interpolate through $N+1$ points. In fact, the numerator is just a polynomial with roots $\{x_j\}_{j\neq i}$. The denominator is essentially a normalization factor.
+
+For Lagrange interpolation, the choice of nodes is very important. Using nodes that cluster at the interpolation interval endpoints (such as Chebyshev nodes) yields a near-optimal polynomial approximation, while using e.g. uniform nodes results in Runge's phenomenon (and consequently the interpolation breaks down). The code uses Chebyshev nodes (of the second kind) for both PDFs and FFs. In the case of PDFs, the interpolation is done in log-space.
+
+For numerical purposes, Lagrange interpolation is often (and in this code as well) implemented using the [barycentric form](https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form) instead of eq. (49).
+
+Lagrange interpolation essentially gives the same level of accuracy as linear interpolation using far fewer nodes. In practice, this means far smaller grid file sizes, which scales as $(\text{number of PDF nodes})\times (\text{number of FF nodes})$. The downside is that this type of interpolation is computationally much heavier (by about an order of magnitude in CPU time). This is because at any given point, typically all Lagrange kernels contribute to the integral and must therefore be calculated. This is in contrast to linear interpolation, where at most two kernels contribute to the integral at a given point. Linear interpolation therefore is mostly independent of the number of nodes (in terms of compute), but Lagrange interpolation is not. In addition, linear interpolation kernels are zero outside of a narrow support region, whereas the support of Lagrange kernels is the entire interpolation interval.
+
+### Blocked Lagrange interpolation
+
+As a middle ground between linear interpolation (fast grid generation, large grid files) and Lagrange interpolation (slow grid generation, small grid files) sits a blocked form of Lagrange interpolation, used by e.g. [EKO](https://eko.readthedocs.io/en/latest). The idea is to group the interpolation knots into overlapping blocks, where each block contains a fixed number of knots ($N_{\text{deg}}+1$ to be exact). Lagrange interpolation is then used within each block. This way, the interpolation is more efficient (i.e. more accurate with fewer knots) than linear interpolation, but the kernels are now confined to a small interval and there is only a fixed number $N_{\text{deg}}+1$ that can contribute to the integral at a given point. 
+
+The implementation follows EKO, so more details on the algorithm can be found in the [EKO documentation](https://eko.readthedocs.io/en/latest/theory/Interpolation.html). The grid points used in the code are the same as in linear interpolation, and $N_{\text{deg}}=4$.
 
 ## Output format
 

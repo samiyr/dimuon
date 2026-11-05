@@ -18,10 +18,10 @@ from pathlib import Path
 def create_arg_parser(run_mode:RunMode):
 	"""
 	Creates the argument parser of dimuon_cross_sections.py (the direct mode) or of dimuon_interpolation_tables.py (the kernel mode), with the arguments of that run mode.
-	The arguments that are passed on to the CC program have the same names there.
+	The arguments that are passed on to the dimuon program have the same names there.
 
 	Args:
-		run_mode: Run mode of the CC program
+		run_mode: Run mode of the dimuon program
 	"""
 	# Abbreviated arguments are not allowed, since they would take e.g. --pdf as --pdf-knot-count in dimuon_interpolation_tables.py
 	parser = configargparse.ArgumentParser(
@@ -56,7 +56,7 @@ def create_arg_parser(run_mode:RunMode):
 	parser.add_argument("--neutrino", action="store_true", default=False, help="include neutrino scattering")
 	parser.add_argument("--antineutrino", action="store_true", default=False, help="include antineutrino scattering")
 
-	# Channel options. The CC program computes up to the highest perturbative order that has channels.
+	# Channel options. The dimuon program computes up to the highest perturbative order that has channels.
 	channel_group = parser.add_mutually_exclusive_group(required=True)
 	channel_group.add_argument("--channels", type=Channels, choices=list(Channels), help="channel preset, computed up to the highest perturbative order that has channels")
 	channel_group.add_argument("--channel-list", action="append", help="explicit list of channel configurations, computed up to the highest perturbative order that has channels")
@@ -113,7 +113,7 @@ def create_arg_parser(run_mode:RunMode):
 		parser.add_argument("--decay-start", type=int, default=0, help="first decay parametrization to include")
 		parser.add_argument("--decay-end", type=int, default=0, help="last decay parametrization to include")
 
-	# Integration options. The CC program integrates the direct mode with --integration-method, and the kernel mode (gridding) with plain quasi-Monte Carlo.
+	# Integration options. The dimuon program integrates the direct mode with --integration-method, and the kernel mode (gridding) with plain quasi-Monte Carlo.
 	# The default evaluations are a power of two, which suits the Sobol points of plain quasi-Monte Carlo.
 	parser.add_argument("--cuba-max-evals", type=int, default=2**20, help="maximum number of evaluations, or the number of quasi-Monte Carlo points")
 	if run_mode == RunMode.direct:
@@ -137,19 +137,19 @@ def create_arg_parser(run_mode:RunMode):
 		parser.add_argument("--pdf-knot-count", type=int, required=True, help="number of PDF interpolation knots")
 		parser.add_argument("--ff-knot-count", type=int, required=True, help="number of FF interpolation knots")
 		parser.add_argument(
-			"--interpolation-kernels", choices=["linear", "lagrange"], required=True,
-			help="interpolation kernels: piecewise linear on lambertgrid knots, or Lagrange polynomials through all the knots (in ln x for the PDF, in z for the FFs) on Chebyshev-Lobatto knots"
+			"--interpolation-kernels", choices=["linear", "global_lagrange", "block_lagrange"], required=True,
+			help="interpolation kernels: piecewise linear, Lagrange polynomials through all the knots on Chebyshev knots of the second kind (global_lagrange), or Lagrange polynomials of degree 4 on blocks of 5 consecutive knots, as in EKO (block_lagrange). The linear and block_lagrange kernels use lambertgrid knots for the PDF and uniform knots for the FFs. The Lagrange polynomials are in ln x for the PDF and in z for the FFs."
 		)
 
 	return parser
 
 def shared_command_arguments(args, run_mode:RunMode, neutrino:bool) -> list[str]:
 	"""
-	Returns the arguments of the CC program that dimuon_cross_sections.py and dimuon_interpolation_tables.py pass in the same way, from the arguments of both run modes.
+	Returns the arguments of the dimuon program that dimuon_cross_sections.py and dimuon_interpolation_tables.py pass in the same way, from the arguments of both run modes.
 
 	Args:
 		args: Arguments parsed by the parser of create_arg_parser
-		run_mode: Run mode of the CC program
+		run_mode: Run mode of the dimuon program
 		neutrino: If true, do neutrino scattering. Otherwise, do antineutrino scattering
 	"""
 	command_arguments = [
@@ -165,7 +165,7 @@ def shared_command_arguments(args, run_mode:RunMode, neutrino:bool) -> list[str]
 	]
 
 	# Thresholds of the heavy quarks, which determine the number of active flavors in the NNLO coefficients.
-	# If they are not given, the CC program takes them from the PDF.
+	# If they are not given, the dimuon program takes them from the PDF.
 	for threshold, flag in [
 		(args.charm_threshold, "--charm-threshold"),
 		(args.bottom_threshold, "--bottom-threshold"),
@@ -192,12 +192,12 @@ def shared_command_arguments(args, run_mode:RunMode, neutrino:bool) -> list[str]
 
 def read_output_file(stdout:bytes) -> list[str]:
 	"""
-	Returns the lines of the output file of the CC program, and deletes the file.
-	With --output-mode file (see shared_command_arguments), the CC program writes its output to a file
+	Returns the lines of the output file of the dimuon program, and deletes the file.
+	With --output-mode file (see shared_command_arguments), the dimuon program writes its output to a file
 	and prints the path of the file on the last line of stdout.
 
 	Args:
-		stdout: Standard output of the CC program
+		stdout: Standard output of the dimuon program
 	"""
 	output_file = stdout.decode("utf-8").splitlines()[-1]
 

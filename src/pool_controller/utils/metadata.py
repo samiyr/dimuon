@@ -4,7 +4,7 @@ from . import constants
 
 def write(file, args):
 	"""
-	Writes a timestamp, all arguments of the run, and the channels passed to the CC program to an output file as comment lines.
+	Writes a timestamp, all arguments of the run, and the channels passed to the dimuon program to an output file as comment lines.
 
 	Args:
 		file: Output file opened in text mode

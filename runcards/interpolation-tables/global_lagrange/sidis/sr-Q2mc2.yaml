@@ -1,8 +1,8 @@
 version: 1
-channels: sidis-gm
+channels: sidis-sr
 scale: Q2+mc2
-dir: lagrange/gm-Q2mc2
+dir: global_lagrange/sr-Q2mc2
 cuba-max-evals: 536870912
 pdf-knot-count: 25
 ff-knot-count: 15
-interpolation-kernels: lagrange
+interpolation-kernels: global_lagrange

@@ -5,8 +5,11 @@
 enum class interpolation_kernel {
 	/// Piecewise-linear kernels (see `linear_interpolation_basis`)
 	linear,
-	/// Lagrange kernels (see `lagrange_interpolation_basis`)
-	lagrange
+	/// Global Lagrange kernels (see `lagrange_interpolation_basis`)
+	global_lagrange,
+	/// Block Lagrange kernels (i.e. `block_interpolation_basis<lagrange_interpolation_basis>`),
+	/// where Lagrange kernels are confined to blocks
+	block_lagrange
 };
 
 #endif

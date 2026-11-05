@@ -2,7 +2,7 @@ from enum import Enum
 
 class Observable(Enum):
 	"""
-	Enum describing the observable type, used by the CC program
+	Enum describing the observable type, used by the dimuon program
 	"""
 
 	charm_dis = "dis.differential.charm"
@@ -13,7 +13,7 @@ class Observable(Enum):
 
 class RunMode(Enum):
 	"""
-	Enum describing how the CC program computes the observable (its --run-mode argument)
+	Enum describing how the dimuon program computes the observable (its --run-mode argument)
 	"""
 
 	direct = "direct"
@@ -123,7 +123,7 @@ class CoefficientImplementation(Enum):
 
 class IntegrationMethod(Enum):
 	"""
-	Enum describing the integration method of the CC program in the direct mode (its --integration-method argument).
+	Enum describing the integration method of the dimuon program in the direct mode (its --integration-method argument).
 	The kernel mode integrates with plain quasi-Monte Carlo.
 	"""
 

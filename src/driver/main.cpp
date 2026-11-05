@@ -14,6 +14,7 @@
 #include <concepts>
 #include <filesystem>
 #include <fstream>
+#include <type_traits>
 
 #include <argparser/arg_parser.hpp>
 #include "channels.hpp"
@@ -33,6 +34,7 @@
 
 #include <dimuon/interpolation/linear_interpolation_basis.hpp>
 #include <dimuon/interpolation/lagrange_interpolation_basis.hpp>
+#include <dimuon/interpolation/block_interpolation_basis.hpp>
 
 #include <dimuon/utility/io.hpp>
 
@@ -535,12 +537,24 @@ int run(const arg_parser &args) {
 					switch (*kernel_type) {
 						case interpolation_kernel::linear:
 							return compute_grid(vector_kernel_interface{linear_interpolation_basis{pdf_knots}}, vector_kernel_interface{linear_interpolation_basis{ff_knots}});
-						case interpolation_kernel::lagrange:
+						case interpolation_kernel::global_lagrange:
 						{
 							const auto log_mapping = [](const double momentum_fraction) { return std::log(momentum_fraction); };
 							return compute_grid(
 								vector_kernel_interface{lagrange_interpolation_basis{pdf_knots, log_mapping}},
 								vector_kernel_interface{lagrange_interpolation_basis{ff_knots}}
+							);
+						}
+						case interpolation_kernel::block_lagrange:
+						{
+							const auto log_mapping = [](const double momentum_fraction) { return std::log(momentum_fraction); };
+							using log_mapping_t = std::remove_const_t<decltype(log_mapping)>;
+							constexpr std::size_t block_degree = 4;
+							using pdf_block_t = lagrange_interpolation_basis<block_degree, log_mapping_t>;
+							using ff_block_t = lagrange_interpolation_basis<block_degree>;
+							return compute_grid(
+								vector_kernel_interface{block_interpolation_basis<pdf_block_t>{pdf_knots, log_mapping}},
+								vector_kernel_interface{block_interpolation_basis<ff_block_t>{ff_knots}}
 							);
 						}
 					}

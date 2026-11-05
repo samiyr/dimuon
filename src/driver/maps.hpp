@@ -40,7 +40,8 @@ namespace maps {
 
 	static const std::unordered_map<std::string, interpolation_kernel> interpolation_kernels = {
 		{"linear", interpolation_kernel::linear},
-		{"lagrange", interpolation_kernel::lagrange}
+		{"global_lagrange", interpolation_kernel::global_lagrange},
+		{"block_lagrange", interpolation_kernel::block_lagrange}
 	};
 
 	static const std::unordered_map<std::string, dm::perturbative_order> perturbative_orders = {
@@ -49,7 +50,6 @@ namespace maps {
 		{"nnlo", dm::perturbative_order::nnlo}
 	};
 
-	/// The scale dependences (--scale), by whether the squared charm mass is added to Q^2: mu^2 = Q^2 (Q2) or mu^2 = Q^2 + mc^2 (Q2+mc2)
 	static const std::unordered_map<std::string, bool> scale_dependences = {
 		{"Q2", false},
 		{"Q2+mc2", true}

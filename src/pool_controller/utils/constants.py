@@ -26,7 +26,7 @@ def get_df_columns(observable:Observable):
 	Returns a list of dataframe column names used before splicing the single output dataframe into several smaller ones.
 
 	Args:
-		observable: observable that the CC program computes
+		observable: observable that the dimuon program computes
 	"""
 
 	dis_differential_columns = [

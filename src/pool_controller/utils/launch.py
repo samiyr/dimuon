@@ -53,7 +53,7 @@ def dimuon_cross_section(arg_list):
 
 	if charm_mass != None:
 		# If an explicit charm mass is requested, pass it on. Otherwise, don't pass a charm mass argument at all,
-		# which signals to the CC program that it should get the charm mass from the PDF.
+		# which signals to the dimuon program that it should get the charm mass from the PDF.
 		command_arguments += ["--charm-mass", np.format_float_positional(charm_mass)]
 
 	if args.isospin:
@@ -68,7 +68,7 @@ def dimuon_cross_section(arg_list):
 		command_arguments += ["--decay-beta", str(beta)]
 		command_arguments += ["--decay-gamma", str(gamma)]
 
-	# Launch the CC program
+	# Launch the dimuon program
 	result = subprocess.run(
 		command_arguments, 
 		stdout=subprocess.PIPE, # for obtaining the path of the output file
@@ -81,7 +81,7 @@ def dimuon_cross_section(arg_list):
 	result_line = output_list[output_list.index("===") + 1]
 	values = result_line.split(", ")
 
-	# Include some internal data not returned by the CC program, but that is needed for bookkeeping later
+	# Include some internal data not returned by the dimuon program, but that is needed for bookkeeping later
 	values += [kinematic_folder, charm_mass]
 	values += [(renormalization, factorization, fragmentation)]
 	values += [parametrization]
@@ -113,11 +113,11 @@ def interpolation_table(arg_list):
 		"--x", str(x),
 		"--y", str(y),
 		"--E", str(E),
-		# The CC program has no PDF in the kernel mode, so the charm mass has to be given
+		# The dimuon program has no PDF in the kernel mode, so the charm mass has to be given
 		"--charm-mass", np.format_float_positional(args.charm_mass)
 	] + arg_parser.shared_command_arguments(args, RunMode.kernel, args.neutrino)
 
-	# Launch the CC program
+	# Launch the dimuon program
 	result = subprocess.run(
 		command_arguments, 
 		stdout=subprocess.PIPE, # for obtaining the path of the output file
