@@ -91,7 +91,7 @@ public:
 
 	/// Returns the kernels that are non-zero at \p x, as a range
 	auto nonzero_at(const double x) const {
-		using diff_t = decltype(kernels)::difference_type;
+		using diff_t = typename decltype(kernels)::difference_type;
 
 		const auto [start_idx, end_idx] = [&]() -> std::pair<diff_t, diff_t> {
 			const bool in_range = knots.front() <= x && x <= knots.back();
