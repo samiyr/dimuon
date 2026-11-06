@@ -1,5 +1,5 @@
-#ifndef DM_INTERPOLATION_BLOCK_INTERPOLATION_BASIS_H
-#define DM_INTERPOLATION_BLOCK_INTERPOLATION_BASIS_H
+#ifndef DM_INTERPOLATION_COMPOSITE_INTERPOLATION_BASIS_H
+#define DM_INTERPOLATION_COMPOSITE_INTERPOLATION_BASIS_H
 
 #include <algorithm>
 #include <cstddef>
@@ -15,29 +15,29 @@
 
 namespace dm {
 
-/// A block-based interpolation basis. The entire interpolation domain is grouped into overlapping blocks,
+/// A composite interpolation basis. The entire interpolation domain is grouped into overlapping blocks,
 /// and interpolation takes place within blocks. Each block consists of `degree + 1` knots.
 /// The actual interpolation is handled by the supplied block basis.
 /// @tparam block_basis_t Type of interpolation basis used within each block
 /// @details The approach here follows EKO (https://eko.readthedocs.io/en/latest/theory/Interpolation.html)
 template <interpolation_basis block_basis_t>
-class block_interpolation_basis {
+class composite_interpolation_basis {
 public:
 	/// The degree of the blocks
 	static constexpr std::size_t degree = block_basis_t::degree;
 	/// The kernel variable mapping of the blocks
 	using mapping_type = typename block_basis_t::mapping_type;
 
-	static_assert(degree != std::dynamic_extent, "Block interpolation needs a fixed-degree basis");
-	static_assert(degree >= 1, "Block interpolation needs a basis of degree one or higher");
+	static_assert(degree != std::dynamic_extent, "Composite interpolation needs a fixed-degree basis");
+	static_assert(degree >= 1, "Composite interpolation needs a basis of degree one or higher");
 
 	/// Only the kernels of a single block can be non-zero at any given point
 	static constexpr std::size_t maximum_kernels_per_point = block_basis_t::maximum_kernels_per_point;
 
-	/// @brief Constructs a block-based interpolation from the list of knots
+	/// @brief Constructs a composite interpolation from the list of knots
 	/// @param[in] knots_ The knots, in increasing order. There must be at least `degree + 1`.
 	/// @param[in] mapping_ The mapping of the kernel variable (`t = mapping(x)`), which must be finite and strictly monotonic at the knots
-	explicit block_interpolation_basis(std::vector<double> knots_, mapping_type mapping_ = {}) :
+	explicit composite_interpolation_basis(std::vector<double> knots_, mapping_type mapping_ = {}) :
 		knots{std::move(knots_)},
 		mapping{std::move(mapping_)},
 		blocks{construct_blocks(knots, mapping)}
@@ -45,7 +45,7 @@ public:
 		const std::vector<double> nodes = knots | std::views::transform(mapping) | std::ranges::to<std::vector>();
 		check_interpolation_knots(knots, nodes);
 		if (knots.size() < degree + 1) {
-			throw std::invalid_argument(std::format("Block interpolation of degree {} needs at least {} knots, got {}", degree, degree + 1, knots.size()));
+			throw std::invalid_argument(std::format("Composite interpolation of degree {} needs at least {} knots, got {}", degree, degree + 1, knots.size()));
 		}
 	}
 

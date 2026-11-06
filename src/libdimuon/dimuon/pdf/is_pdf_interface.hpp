@@ -10,7 +10,7 @@
 #include "dimuon/common/constants.hpp"
 #include "dimuon/common/flavor.hpp"
 
-#include "dimuon/interpolation/block_interpolation_basis.hpp"
+#include "dimuon/interpolation/composite_interpolation_basis.hpp"
 
 #include "dimuon/pdf/interface/lha_interface.hpp"
 #include "dimuon/pdf/interface/functional_form_interface.hpp"
@@ -61,8 +61,8 @@ static_assert(
 	"Type `vector_kernel_interface<lagrange_interpolation_basis<>>` doesn't satisfy concept `is_vector_pdf_interface`."
 );
 static_assert(
-	is_vector_pdf_interface<vector_kernel_interface<block_interpolation_basis<lagrange_interpolation_basis<4>>>>,
-	"Type `vector_kernel_interface<block_interpolation_basis<lagrange_interpolation_basis<4>>>` doesn't satisfy concept `is_vector_pdf_interface`."
+	is_vector_pdf_interface<vector_kernel_interface<composite_interpolation_basis<lagrange_interpolation_basis<4>>>>,
+	"Type `vector_kernel_interface<composite_interpolation_basis<lagrange_interpolation_basis<4>>>` doesn't satisfy concept `is_vector_pdf_interface`."
 );
 
 }

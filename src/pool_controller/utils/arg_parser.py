@@ -137,8 +137,8 @@ def create_arg_parser(run_mode:RunMode):
 		parser.add_argument("--pdf-knot-count", type=int, required=True, help="number of PDF interpolation knots")
 		parser.add_argument("--ff-knot-count", type=int, required=True, help="number of FF interpolation knots")
 		parser.add_argument(
-			"--interpolation-kernels", choices=["linear", "global_lagrange", "block_lagrange"], required=True,
-			help="interpolation kernels: piecewise linear, Lagrange polynomials through all the knots on Chebyshev knots of the second kind (global_lagrange), or Lagrange polynomials of degree 4 on blocks of 5 consecutive knots, as in EKO (block_lagrange). The linear and block_lagrange kernels use lambertgrid knots for the PDF and uniform knots for the FFs. The Lagrange polynomials are in ln x for the PDF and in z for the FFs."
+			"--interpolation-kernels", choices=["linear", "global_lagrange", "composite_lagrange"], required=True,
+			help="interpolation kernels: piecewise linear, Lagrange polynomials through all the knots on Chebyshev knots of the second kind (global_lagrange), or Lagrange polynomials of degree 4 on blocks of 5 consecutive knots, as in EKO (composite_lagrange). The linear and composite_lagrange kernels use lambertgrid knots for the PDF and uniform knots for the FFs. The Lagrange polynomials are in ln x for the PDF and in z for the FFs."
 		)
 
 	return parser

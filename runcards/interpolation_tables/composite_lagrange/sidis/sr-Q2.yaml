@@ -1,8 +1,8 @@
 version: 1
 channels: sidis-sr
 scale: Q2
-dir: block_lagrange/sr-Q2
+dir: composite_lagrange/sr-Q2
 cuba-max-evals: 536870912
 pdf-knot-count: 30
 ff-knot-count: 20
-interpolation-kernels: block_lagrange
+interpolation-kernels: composite_lagrange

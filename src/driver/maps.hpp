@@ -41,7 +41,7 @@ namespace maps {
 	static const std::unordered_map<std::string, interpolation_kernel> interpolation_kernels = {
 		{"linear", interpolation_kernel::linear},
 		{"global_lagrange", interpolation_kernel::global_lagrange},
-		{"block_lagrange", interpolation_kernel::block_lagrange}
+		{"composite_lagrange", interpolation_kernel::composite_lagrange}
 	};
 
 	static const std::unordered_map<std::string, dm::perturbative_order> perturbative_orders = {

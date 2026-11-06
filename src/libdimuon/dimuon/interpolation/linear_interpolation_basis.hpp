@@ -70,7 +70,7 @@ public:
 	/// @brief Constructs the interpolation basis from the list of knots
 	/// @param[in] knots_ The knots, in increasing order. There must be at least two.
 	/// @param[in] mapping_ The mapping of the kernel variable (`t = mapping(x)`), which must be finite and strictly monotonic at the knots
-	/// @param[in] index_offset Starting index for the numbering of kernel indices. Used by `block_interpolation_basis`. Defaults to 0.
+	/// @param[in] index_offset Starting index for the numbering of kernel indices. Used by `composite_interpolation_basis`. Defaults to 0.
 	explicit linear_interpolation_basis(std::vector<double> knots_, mapping_t mapping_ = {}, const kernel_index index_offset = 0) :
 		knots{std::move(knots_)},
 		mapping{std::move(mapping_)}

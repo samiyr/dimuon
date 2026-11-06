@@ -82,7 +82,7 @@ namespace sidis {
 	private:
 		/// The largest number of non-zero kernels in a column (see `vector_kernel_interface::values`), or `std::dynamic_extent` if it isn't limited by a constant
 		static constexpr std::size_t max_kernels_per_column = kernel_interface_t::maximum_kernels_per_point;
-		/// The rows of the non-zero kernels, in no particular order. If the maximum number of elements is known (which is the case for linear and block-Lagrange interpolation),
+		/// The rows of the non-zero kernels, in no particular order. If the maximum number of elements is known (which is the case for linear and composite Lagrange interpolation),
 		/// use an inplace vector. If it is not known (which is the case for global Lagrange interpolation), use a vector.
 		using storage_t = std::conditional_t<
 			max_kernels_per_column == std::dynamic_extent, std::vector<row_t>, shims::inplace_vector<row_t, max_kernels_per_column * column_count>
