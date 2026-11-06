@@ -180,3 +180,13 @@ TEST(scale_dependence, lower_bound) {
 	const trf_kinematics kinematics = trf_kinematics::Q2_s(0.1, 0.5, 1000.0, proton_mass, 0.0);
 	EXPECT_DOUBLE_EQ((0.25 * scale)(kinematics), bound);
 }
+
+TEST(scale_dependence, multiplier_with_lower_bound) {
+	// The minimum is not multiplied: 4 * max(Q^2, bound) would be 4 * bound
+	const double bound = 1.69;
+	const scale_dependence::function scale{[](const trf_kinematics &kinematics) { return kinematics.Q2; }, bound};
+	const trf_kinematics kinematics = trf_kinematics::Q2_s(0.1, 0.5, 1000.0, proton_mass, 0.0);
+	EXPECT_DOUBLE_EQ((4.0 * scale)(kinematics), 4.0 * kinematics.Q2);
+	EXPECT_DOUBLE_EQ((scale * 4.0)(kinematics), 4.0 * kinematics.Q2);
+	EXPECT_DOUBLE_EQ((2.0 * scale)(kinematics), bound);
+}

@@ -23,6 +23,7 @@
 #include "run_mode.hpp"
 #include "output_mode.hpp"
 #include "interpolation_kernel.hpp"
+#include "scale_dependence_mode.hpp"
 
 #include <dimuon/pdf/interface/vector_kernel_interface.hpp>
 #include <dimuon/sidis/partonic_channel.hpp>
@@ -263,8 +264,8 @@ int run(const arg_parser &args) {
 	const double factorization_scale_multiplier = args.get_double_argument("factorization", 1.0);
 	const double fragmentation_scale_multiplier = args.get_double_argument("fragmentation", 1.0);
 
-	// Read the scale dependence: mu^2 = Q^2 (Q2) or mu^2 = Q^2 + mc^2 (Q2+mc2, the default), see `scale` below
-	const bool scale_adds_charm_mass = args.get_choice_argument("scale", maps::scale_dependences, true);
+	// Read the scale dependence mode
+	const scale_dependence_mode scale_mode = args.get_choice_argument("scale", maps::scale_dependence_modes, scale_dependence_mode::Q2mc2);
 	const bool renormalization_bounded = !args.get_flag("renormalization-unbounded");
 	const bool factorization_bounded = !args.get_flag("factorization-unbounded");
 	const bool fragmentation_bounded = !args.get_flag("fragmentation-unbounded");
@@ -273,10 +274,18 @@ int run(const arg_parser &args) {
 	const double min_E = args.get_double_argument("minE", 5.0);
 
 	// Construct scale dependence function: Q^2, plus mc^2 with --scale Q2+mc2, bounded from below by mc^2 if bound_from_below
-	const auto scale = [scale_adds_charm_mass](const double charm_mass_, const bool bound_from_below) {
+	const auto scale = [scale_mode](const double charm_mass_, const bool bound_from_below) {
 		const double mc2 = math::power<2>(charm_mass_);
 		const double lower_bound = bound_from_below ? mc2 : 0.0;
-		const double mass_term = scale_adds_charm_mass ? mc2 : 0.0;
+		const double mass_term = [&] {
+			switch (scale_mode) {
+				case scale_dependence_mode::Q2:
+					return 0.0;
+				case scale_dependence_mode::Q2mc2:
+					return mc2;
+			}
+			std::unreachable();
+		}();
 
 		return scale_dependence::function([mass_term](const trf_kinematics &kinematics_) noexcept { return kinematics_.Q2 + mass_term; }, lower_bound);
 	};

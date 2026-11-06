@@ -34,6 +34,15 @@ namespace scale_dependence {
 			return std::max(scale_function(kinematics), minimum);
 		}
 
+		friend auto operator*(const double lhs, const function &rhs) {
+			return scale_dependence::function([lhs, unbounded = rhs.scale_function](
+				const trf_kinematics &kinematics
+			) noexcept(noexcept(rhs.scale_function(kinematics))) {
+				return lhs * unbounded(kinematics);
+			}, rhs.minimum);
+		}
+		friend auto operator*(const function &lhs, const double rhs) { return rhs * lhs; }
+
 	private:
 		function_t scale_function;
 	};
@@ -56,18 +65,6 @@ namespace scale_dependence {
 	/// between a minimum and maximum Q^2 value
 	[[maybe_unused]] inline auto clamped_multiplicative(const double factor, const double Q2_min, const double Q2_max) noexcept {
 		return function([factor, Q2_min, Q2_max](const trf_kinematics &kinematics) noexcept { return std::clamp(kinematics.Q2 * factor, Q2_min, Q2_max); });
-	}
-
-	template <is_scale_dependence function_t>
-	auto operator*(const double lhs, const function<function_t> &rhs) {
-		return function([lhs, rhs](const trf_kinematics &kinematics) noexcept(noexcept(rhs(kinematics))) {
-			return lhs * rhs(kinematics);
-		}, rhs.minimum);
-	}
-	
-	template <is_scale_dependence function_t>
-	auto operator*(const function<function_t> &lhs, const double rhs) {
-		return rhs * lhs;
 	}
 }
 

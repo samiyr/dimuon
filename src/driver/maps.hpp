@@ -18,6 +18,7 @@
 #include "run_mode.hpp"
 #include "output_mode.hpp"
 #include "interpolation_kernel.hpp"
+#include "scale_dependence_mode.hpp"
 
 namespace maps {
 	/// Returns a map from the bidirectional map (see `dm::names`)
@@ -50,9 +51,9 @@ namespace maps {
 		{"nnlo", dm::perturbative_order::nnlo}
 	};
 
-	static const std::unordered_map<std::string, bool> scale_dependences = {
-		{"Q2", false},
-		{"Q2+mc2", true}
+	static const std::unordered_map<std::string, scale_dependence_mode> scale_dependence_modes = {
+		{"Q2", scale_dependence_mode::Q2},
+		{"Q2+mc2", scale_dependence_mode::Q2mc2}
 	};
 
 	static const std::unordered_map<std::string, dm::mass_scheme_t> mass_schemes = by_name(dm::mass_scheme_names);
