@@ -56,8 +56,10 @@ if __name__ == '__main__':
 	# Halve the light-quark flavors when using KKKS08 / BKK05 FFs
 	multipliers = {-6 : 1.0, -5: 1.0, -4: 1.0, -3: 0.5, -2: 0.5, -1: 0.5, 0: 0.5, 1: 0.5, 2: 0.5, 3: 0.5, 4: 1.0, 5: 1.0, 6: 1.0}
 
+	# Freeze the FFs outside their grids to match the behaviour of direct mode, affecting kinematical points with mu_frag^2 < (1.5 GeV)^2.
+	# This is ultimately a choice, and the grids themselves are indifferent to it.
 	def bind_ff(ff, multipliers):
-		return lambda f, x, Q2: ff.xfxQ2(f, x, Q2) * multipliers[f]
+		return lambda f, x, Q2: ff.xfxQ2(f, np.clip(x, ff.xMin, ff.xMax), np.clip(Q2, ff.q2Min, ff.q2Max)) * multipliers[f]
 
 	ff_funcs = [bind_ff(ff, multipliers) for ff in ffs]
 
