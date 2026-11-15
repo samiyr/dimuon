@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gzip
 import itertools
 from dataclasses import dataclass
 import pandas as pd
@@ -99,6 +100,15 @@ def import_gridfile(filename:str, compression={"method": "gzip", "compresslevel"
 	while dfs_by_resonance:
 		grids_by_resonance.append(import_grid(dfs_by_resonance.pop(0), fill_missing_channels))
 	return grids_by_resonance
+
+def import_gridfile_metadata(filename:str) -> dict[str, str]:
+	"""
+	Reads the metadata `# key: value` from the grid file into a dictionary
+	"""
+	with gzip.open(filename, "rt") as file:
+		lines = itertools.takewhile(lambda line: line.startswith("#"), file)
+		pairs = (line.removeprefix("#").partition(":") for line in lines)
+		return {key.strip(): value.strip() for key, _, value in pairs}
 
 def import_grid(df:pd.DataFrame, fill_missing_channels:bool=True) -> interpolation_grid:
 	"""

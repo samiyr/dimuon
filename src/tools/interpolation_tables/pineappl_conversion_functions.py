@@ -3,13 +3,13 @@ from pathlib import Path
 
 import numpy as np
 
-from common import interpolation_grid, import_gridfile
+from common import interpolation_grid, import_gridfile, import_gridfile_metadata
 
 import pineappl
 
 ### PineAPPL conversion
 
-def convert_grid_to_pineappl(input_grid:interpolation_grid, normalization:float=1.0) -> pineappl.grid.Grid:
+def convert_grid_to_pineappl(input_grid:interpolation_grid, normalization:float=1.0, metadata:dict[str, str]={}) -> pineappl.grid.Grid:
 	"""
 	Converts the given input grid into a PineAPPL grid
 	
@@ -19,6 +19,8 @@ def convert_grid_to_pineappl(input_grid:interpolation_grid, normalization:float=
 		The input grid object for a single resonance, obtained using e.g. `common.import_gridfile` or `common.import_grid`
 	normalization : float [default: 1.0]
 		Normalization constant multiplying all appropriate values in the output grid	
+	metadata : dict[str, str] [default: {}]
+		Metadata written to the output grid
 
 	Returns
 	-------
@@ -251,6 +253,13 @@ def convert_grid_to_pineappl(input_grid:interpolation_grid, normalization:float=
 	)
 	grid.set_bwfl(bin_configs)
 
+	for key, value in metadata.items():
+		if value != "":
+			grid.set_metadata(key, value)
+
+	grid.set_metadata("resonance", str(acc.unique_resonances[0]))
+	grid.set_metadata("normalization", str(normalization))
+
 	grid.set_metadata("x1_label", "x")
 	grid.set_metadata("x2_label", "y")
 	grid.set_metadata("x3_label", "E")
@@ -276,10 +285,12 @@ def convert_gridfile_to_pineappl(input_path:Path, output_directory:Path, resonan
 
 	Notes
 	-----
-	The filenames for the output grids are of the format '<resonance>.pineappl.lz4', where <resonance> is the name of the resonance particle defined in `resonances`
+	The filenames for the output grids are of the format '<resonance>.pineappl.lz4', where <resonance> is the name of the resonance particle defined in `resonances`.
+	Each output grid gets the metadata of the original grid file (see `common.import_gridfile_metadata`).
 	"""
 
 	print(f"Importing {input_path}")
+	metadata = import_gridfile_metadata(input_path)
 	# Missing flavor combinations are not needed, since they would only be removed as empty channels in `grid.optimize()`
 	grids = {grid.acc.unique_resonances[0]: grid for grid in import_gridfile(input_path, fill_missing_channels=False)}
 
@@ -293,7 +304,7 @@ def convert_gridfile_to_pineappl(input_path:Path, output_directory:Path, resonan
 		if res in grids:
 			output_path = output_directory / f"{res}.pineappl.lz4"
 			print(f"Converting {res} and writing it to {output_path}")
-			convert_grid_to_pineappl(grids.pop(res), normalization).write_lz4(output_path)
+			convert_grid_to_pineappl(grids.pop(res), normalization, metadata).write_lz4(output_path)
 
 def dump_grid_directory_to_pineappl(grid_directory:Path, output_directory:Path, resonances:dict[str, float]={"D0": 1.0, "Dp": 1.0, "Ds": 1.0, "LambdaC": 1.14}, pattern:str = "*.csv.gz") -> None:
 	"""
