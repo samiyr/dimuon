@@ -1,21 +1,21 @@
 This code is for computing dimuon production cross sections in neutrino-nucleus collisions in the SIDIS framework, based on the following papers:
 - [JHEP 09 (2024) 043](https://doi.org/10.1007/JHEP09(2024)043)
 - [JHEP 01 (2026) 112](https://doi.org/10.1007/JHEP01(2026)112)
-- [JHEP 06 (2026) 254](https://doi.org/10.1007/JHEP06(2026)254).
+- [JHEP 06 (2026) 254](https://doi.org/10.1007/JHEP06(2026)254)
 
 # Components
 
 The code consists of several components, which are listed here. Each component has more documentation within it.
 
-- `libdimuon`: header-only library that actually does the computations
-- `driver`: driver executable, which calls into `libdimuon`, that can be run to produce cross section or interpolation table values
-- `pool_controller`: a Python controller for running `dimuon` on a cluster
-- `libargparser`: supporting header-only library for parsing command-line arguments
-- `tools/decay_grid_generator`: tool for calculating decay grids
-- `tools/bkk05_lhapdf_grid_generator`: tool for converting the [`bkk05`](https://doi.org/10.1103/PhysRevD.74.037502) fragmentation function grids into the LHAPDF format
-- `tools/kkks08_lhapdf_grid_generator`: tool for converting the [`kkks08`](https://doi.org/10.1016/j.nuclphysb.2008.02.015) fragmentation function grids into the LHAPDF format
-- `tools/interpolation_tables`: Python tools for reading interpolation tables generated from `dimuon` and converting them to the [PineAPPL](https://zenodo.org/badge/latestdoi/248306479) format
-- `tests`: various tests of `libdimuon`
+- [`libdimuon`](src/libdimuon/): header-only library that actually does the computations
+- [`driver`](src/driver/): driver executable, which calls into [`libdimuon`](src/libdimuon/), that can be run to produce cross section or interpolation table values
+- [`pool_controller`](src/pool_controller/): a Python controller for running `dimuon` on a cluster
+- [`libargparser`](src/libargparser/): supporting header-only library for parsing command-line arguments
+- [`tools/decay_grid_generator`](src/tools/decay_grid_generator/): tool for calculating decay grids
+- [`tools/bkk05_lhapdf_grid_generator`](src/tools/bkk05_lhapdf_grid_generator/): tool for converting the [`bkk05`](https://doi.org/10.1103/PhysRevD.74.037502) fragmentation function grids into the LHAPDF format
+- [`tools/kkks08_lhapdf_grid_generator`](src/tools/kkks08_lhapdf_grid_generator/): tool for converting the [`kkks08`](https://doi.org/10.1016/j.nuclphysb.2008.02.015) fragmentation function grids into the LHAPDF format
+- [`tools/interpolation_tables`](src/tools/interpolation_tables/): Python tools for reading interpolation tables generated from `dimuon` and converting them to the [PineAPPL](https://zenodo.org/badge/latestdoi/248306479) format
+- [`tests`](src/tests/): various tests of [`libdimuon`](src/libdimuon/)
 
 # Installation
 
@@ -65,13 +65,13 @@ cmake --install build
 
 ## Optimization flags
 
-The library cannot have any optimization flags enabled by default, and instead have to be set on the target that includes `libdimuon`. Recommended flags are exported as `dimuon::optimization_flags` for easy access via CMake.
+The library cannot have any optimization flags enabled by default, and instead have to be set on the target that includes [`libdimuon`](src/libdimuon/). Recommended flags are exported as `dimuon::optimization_flags` for easy access via CMake.
 
 ## Drivers
 
 Again, the library itself is header-only and cannot be built on its own, so there will be no `lib` directory in `<installdir>` and no `libdimuon.so` file. The library will be built only when it's included in a driver executable.
 
-A minimal example of a driver can be found in `examples/minimal_driver`. The `dimuon` executable is an example of a more complete driver that can be used for obtaining actual data. The built `dimuon` executable can be found in `<installdir>/bin/dimuon`.
+A minimal example of a driver can be found in [`examples/minimal_driver`](examples/minimal_driver/). The `dimuon` executable is an example of a more complete driver that can be used for obtaining actual data. The built `dimuon` executable can be found in `<installdir>/bin/dimuon`.
 
 To verify that the library builds properly without including it in a driver, the command
 ```
@@ -98,7 +98,7 @@ The second line contains the optimization flags: `-O3 -DNDEBUG` are the flags CM
 
 If necessary, point the `CUBA_ROOT`, `LHAPDF_ROOT`, and `GSL_ROOT` variables to the respective installations so that CMake can find these libraries (see [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) documentation for more).
 
-As an example, the minimal driver also contains a `CMakeLists.txt`. It finds the installed library and links against it with the appropriate optimization flags. It can be built with the commands
+As an example, the minimal driver also contains a [`CMakeLists.txt`](examples/minimal_driver/CMakeLists.txt). It finds the installed library and links against it with the appropriate optimization flags. It can be built with the commands
 ```
 cd <installdir>/share/dimuon/examples/minimal_driver
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=<installdir>
@@ -110,4 +110,4 @@ which creates the executable `build/minimal_driver`. Note that `-DCMAKE_BUILD_TY
 
 Some of the data files are publicly available via [this link](https://a3s.fi/swift/v1/jyy2580-dimuon-pub/). The simplest way to use that link is to open it in a browser, which will give you a list of file paths. The link to an actual file is then obtained by appending a file path to the link above.
 
-The most relevant files are the ones in the `dimuon-data/pineappl/composite_lagrange` directory, which are the dimuon production interpolation tables in the [PineAPPL](https://zenodo.org/badge/latestdoi/248306479) format. For more information on how to use these PineAPPL grids, refer to the `README.md` in `tools/interpolation_tables`. 
+The most relevant files are the ones in the `dimuon-data/pineappl/composite_lagrange` directory, which are the dimuon production interpolation tables in the [PineAPPL](https://zenodo.org/badge/latestdoi/248306479) format. For more information on how to use these PineAPPL grids, refer to the [`README.md`](src/tools/interpolation_tables/README.md) in [`tools/interpolation_tables`](src/tools/interpolation_tables/). 
