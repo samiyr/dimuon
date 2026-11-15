@@ -6579,36 +6579,27 @@ id FTC2q2qMFcon2      = (  + NC^-1 * (  - 15/8
        + 9/16*InvTanInt(sqrtxz3)*x*z*sqrtxz3
        + 5/32*InvTanInt(sqrtxz3)*x^2*sqrtxz3 ) );
 
-id FTC2q2qMANoW      = (  + NC^-1 * ( 5
+id FTC2q2qMANoW      = (  + NC^-1 * ( 3
        - 2*poly2^-1
-       - 3*z*[z-x]^-1
        + 4*z*poly2^-1
-       - 9*z
-       + 3*z^2*[z-x]^-1
+       - 6*z
        - 4*z^2*poly2^-1
-       + 6*z^2
-       - 2*z^3*[z-x]^-1
+       + 4*z^2
        - 6*x*poly2^-1
        + 20*x*z*poly2^-1
        - 28*x*z^2*poly2^-1
        + 16*x*z^3*poly2^-1
-       - 3*ln(x)
+       - 2*ln(x)
        + 12*ln(x)*poly2^-2
        - 10*ln(x)*poly2^-1
-       + 4*ln(x)*z*[z-x]^-1
        - 84*ln(x)*z*poly2^-2
        + 80*ln(x)*z*poly2^-1
-       + 6*ln(x)*z
-       - 3*ln(x)*z^2*[z-x]^-2
-       - 5*ln(x)*z^2*[z-x]^-1
+       + 4*ln(x)*z
        + 192*ln(x)*z^2*poly2^-2
        - 188*ln(x)*z^2*poly2^-1
-       - 6*ln(x)*z^2
-       + 3*ln(x)*z^3*[z-x]^-2
-       + 4*ln(x)*z^3*[z-x]^-1
+       - 4*ln(x)*z^2
        - 216*ln(x)*z^3*poly2^-2
        + 216*ln(x)*z^3*poly2^-1
-       - 2*ln(x)*z^4*[z-x]^-2
        + 96*ln(x)*z^4*poly2^-2
        - 96*ln(x)*z^4*poly2^-1
        + 12*ln(x)*x*poly2^-2
@@ -6673,22 +6664,16 @@ id FTC2q2qMANoW      = (  + NC^-1 * ( 5
        + 112*ln(x)*ln(1 + sqrtxz2 + x)*x*z^4*sqrtxz2^-1*poly2^-1
        - 2304*ln(x)*ln(1 + sqrtxz2 + x)*x*z^5*sqrtxz2^-1*poly2^-2
        + 768*ln(x)*ln(1 + sqrtxz2 + x)*x*z^6*sqrtxz2^-1*poly2^-2
-       + 4*ln(z)
+       + 3*ln(z)
        - 2*ln(z)*poly2^-1
-       - 4*ln(z)*z*[z-x]^-1
        + 36*ln(z)*z*poly2^-2
        - 32*ln(z)*z*poly2^-1
-       - 6*ln(z)*z
-       + 3*ln(z)*z^2*[z-x]^-2
-       + 5*ln(z)*z^2*[z-x]^-1
+       - 4*ln(z)*z
        - 120*ln(z)*z^2*poly2^-2
        + 116*ln(z)*z^2*poly2^-1
-       + 6*ln(z)*z^2
-       - 3*ln(z)*z^3*[z-x]^-2
-       - 4*ln(z)*z^3*[z-x]^-1
+       + 4*ln(z)*z^2
        + 168*ln(z)*z^3*poly2^-2
        - 168*ln(z)*z^3*poly2^-1
-       + 2*ln(z)*z^4*[z-x]^-2
        - 96*ln(z)*z^4*poly2^-2
        + 96*ln(z)*z^4*poly2^-1
        - 6*ln(z)*x*poly2^-1
@@ -6806,36 +6791,27 @@ id FTC2q2qMANoW      = (  + NC^-1 * ( 5
        - 768*Li2(1/2 + 1/2*sqrtxz2 - 1/2*x)*x*z^6*sqrtxz2^-1*poly2^-2
        )
 
-       + NC * (  - 5
+       + NC * (  - 3
        + 2*poly2^-1
-       + 3*z*[z-x]^-1
        - 4*z*poly2^-1
-       + 9*z
-       - 3*z^2*[z-x]^-1
+       + 6*z
        + 4*z^2*poly2^-1
-       - 6*z^2
-       + 2*z^3*[z-x]^-1
+       - 4*z^2
        + 6*x*poly2^-1
        - 20*x*z*poly2^-1
        + 28*x*z^2*poly2^-1
        - 16*x*z^3*poly2^-1
-       + 3*ln(x)
+       + 2*ln(x)
        - 12*ln(x)*poly2^-2
        + 10*ln(x)*poly2^-1
-       - 4*ln(x)*z*[z-x]^-1
        + 84*ln(x)*z*poly2^-2
        - 80*ln(x)*z*poly2^-1
-       - 6*ln(x)*z
-       + 3*ln(x)*z^2*[z-x]^-2
-       + 5*ln(x)*z^2*[z-x]^-1
+       - 4*ln(x)*z
        - 192*ln(x)*z^2*poly2^-2
        + 188*ln(x)*z^2*poly2^-1
-       + 6*ln(x)*z^2
-       - 3*ln(x)*z^3*[z-x]^-2
-       - 4*ln(x)*z^3*[z-x]^-1
+       + 4*ln(x)*z^2
        + 216*ln(x)*z^3*poly2^-2
        - 216*ln(x)*z^3*poly2^-1
-       + 2*ln(x)*z^4*[z-x]^-2
        - 96*ln(x)*z^4*poly2^-2
        + 96*ln(x)*z^4*poly2^-1
        - 12*ln(x)*x*poly2^-2
@@ -6900,22 +6876,16 @@ id FTC2q2qMANoW      = (  + NC^-1 * ( 5
        - 112*ln(x)*ln(1 + sqrtxz2 + x)*x*z^4*sqrtxz2^-1*poly2^-1
        + 2304*ln(x)*ln(1 + sqrtxz2 + x)*x*z^5*sqrtxz2^-1*poly2^-2
        - 768*ln(x)*ln(1 + sqrtxz2 + x)*x*z^6*sqrtxz2^-1*poly2^-2
-       - 4*ln(z)
+       - 3*ln(z)
        + 2*ln(z)*poly2^-1
-       + 4*ln(z)*z*[z-x]^-1
        - 36*ln(z)*z*poly2^-2
        + 32*ln(z)*z*poly2^-1
-       + 6*ln(z)*z
-       - 3*ln(z)*z^2*[z-x]^-2
-       - 5*ln(z)*z^2*[z-x]^-1
+       + 4*ln(z)*z
        + 120*ln(z)*z^2*poly2^-2
        - 116*ln(z)*z^2*poly2^-1
-       - 6*ln(z)*z^2
-       + 3*ln(z)*z^3*[z-x]^-2
-       + 4*ln(z)*z^3*[z-x]^-1
+       - 4*ln(z)*z^2
        - 168*ln(z)*z^3*poly2^-2
        + 168*ln(z)*z^3*poly2^-1
-       - 2*ln(z)*z^4*[z-x]^-2
        + 96*ln(z)*z^4*poly2^-2
        - 96*ln(z)*z^4*poly2^-1
        + 6*ln(z)*x*poly2^-1
@@ -11111,70 +11081,70 @@ id FTC2q2gM      = (  + NC^-2 * (  - 41/8
        + Li2(z)*x
        + 5*Li2(z)*x*z );
 
-id FTC2q2gMANoW      = (  + NC^-1 * ( 2
-       - 4*[1-x-z]^-1
-       + 6*z*[1-x-z]^-1
-       - 2*z
-       - 6*z^2*[1-x-z]^-1
-       + 4*z^2
-       + 4*z^3*[1-x-z]^-1
-       - 2*ln(x)
-       - 4*ln(x)*[1-x-z]^-2
-       + 6*ln(x)*[1-x-z]^-1
-       + 10*ln(x)*z*[1-x-z]^-2
-       - 12*ln(x)*z*[1-x-z]^-1
-       + 4*ln(x)*z
-       - 12*ln(x)*z^2*[1-x-z]^-2
-       + 14*ln(x)*z^2*[1-x-z]^-1
-       - 4*ln(x)*z^2
-       + 10*ln(x)*z^3*[1-x-z]^-2
-       - 8*ln(x)*z^3*[1-x-z]^-1
-       - 4*ln(x)*z^4*[1-x-z]^-2
-       + 2*ln([1-z])
-       + 4*ln([1-z])*[1-x-z]^-2
-       - 6*ln([1-z])*[1-x-z]^-1
-       - 10*ln([1-z])*z*[1-x-z]^-2
-       + 12*ln([1-z])*z*[1-x-z]^-1
-       - 4*ln([1-z])*z
-       + 12*ln([1-z])*z^2*[1-x-z]^-2
-       - 14*ln([1-z])*z^2*[1-x-z]^-1
-       + 4*ln([1-z])*z^2
-       - 10*ln([1-z])*z^3*[1-x-z]^-2
-       + 8*ln([1-z])*z^3*[1-x-z]^-1
-       + 4*ln([1-z])*z^4*[1-x-z]^-2
+id FTC2q2gMANoW      = (  + NC^-1 * ( 1
+       - 2*[1-x-z]^-1
+       + 3*z*[1-x-z]^-1
+       - z
+       - 3*z^2*[1-x-z]^-1
+       + 2*z^2
+       + 2*z^3*[1-x-z]^-1
+       - ln(x)
+       - 2*ln(x)*[1-x-z]^-2
+       + 3*ln(x)*[1-x-z]^-1
+       + 5*ln(x)*z*[1-x-z]^-2
+       - 6*ln(x)*z*[1-x-z]^-1
+       + 2*ln(x)*z
+       - 6*ln(x)*z^2*[1-x-z]^-2
+       + 7*ln(x)*z^2*[1-x-z]^-1
+       - 2*ln(x)*z^2
+       + 5*ln(x)*z^3*[1-x-z]^-2
+       - 4*ln(x)*z^3*[1-x-z]^-1
+       - 2*ln(x)*z^4*[1-x-z]^-2
+       + ln([1-z])
+       + 2*ln([1-z])*[1-x-z]^-2
+       - 3*ln([1-z])*[1-x-z]^-1
+       - 5*ln([1-z])*z*[1-x-z]^-2
+       + 6*ln([1-z])*z*[1-x-z]^-1
+       - 2*ln([1-z])*z
+       + 6*ln([1-z])*z^2*[1-x-z]^-2
+       - 7*ln([1-z])*z^2*[1-x-z]^-1
+       + 2*ln([1-z])*z^2
+       - 5*ln([1-z])*z^3*[1-x-z]^-2
+       + 4*ln([1-z])*z^3*[1-x-z]^-1
+       + 2*ln([1-z])*z^4*[1-x-z]^-2
        )
 
-       + NC * (  - 2
-       + 4*[1-x-z]^-1
-       - 6*z*[1-x-z]^-1
-       + 2*z
-       + 6*z^2*[1-x-z]^-1
-       - 4*z^2
-       - 4*z^3*[1-x-z]^-1
-       + 2*ln(x)
-       + 4*ln(x)*[1-x-z]^-2
-       - 6*ln(x)*[1-x-z]^-1
-       - 10*ln(x)*z*[1-x-z]^-2
-       + 12*ln(x)*z*[1-x-z]^-1
-       - 4*ln(x)*z
-       + 12*ln(x)*z^2*[1-x-z]^-2
-       - 14*ln(x)*z^2*[1-x-z]^-1
-       + 4*ln(x)*z^2
-       - 10*ln(x)*z^3*[1-x-z]^-2
-       + 8*ln(x)*z^3*[1-x-z]^-1
-       + 4*ln(x)*z^4*[1-x-z]^-2
-       - 2*ln([1-z])
-       - 4*ln([1-z])*[1-x-z]^-2
-       + 6*ln([1-z])*[1-x-z]^-1
-       + 10*ln([1-z])*z*[1-x-z]^-2
-       - 12*ln([1-z])*z*[1-x-z]^-1
-       + 4*ln([1-z])*z
-       - 12*ln([1-z])*z^2*[1-x-z]^-2
-       + 14*ln([1-z])*z^2*[1-x-z]^-1
-       - 4*ln([1-z])*z^2
-       + 10*ln([1-z])*z^3*[1-x-z]^-2
-       - 8*ln([1-z])*z^3*[1-x-z]^-1
-       - 4*ln([1-z])*z^4*[1-x-z]^-2 ) );
+       + NC * (  - 1
+       + 2*[1-x-z]^-1
+       - 3*z*[1-x-z]^-1
+       + z
+       + 3*z^2*[1-x-z]^-1
+       - 2*z^2
+       - 2*z^3*[1-x-z]^-1
+       + ln(x)
+       + 2*ln(x)*[1-x-z]^-2
+       - 3*ln(x)*[1-x-z]^-1
+       - 5*ln(x)*z*[1-x-z]^-2
+       + 6*ln(x)*z*[1-x-z]^-1
+       - 2*ln(x)*z
+       + 6*ln(x)*z^2*[1-x-z]^-2
+       - 7*ln(x)*z^2*[1-x-z]^-1
+       + 2*ln(x)*z^2
+       - 5*ln(x)*z^3*[1-x-z]^-2
+       + 4*ln(x)*z^3*[1-x-z]^-1
+       + 2*ln(x)*z^4*[1-x-z]^-2
+       - ln([1-z])
+       - 2*ln([1-z])*[1-x-z]^-2
+       + 3*ln([1-z])*[1-x-z]^-1
+       + 5*ln([1-z])*z*[1-x-z]^-2
+       - 6*ln([1-z])*z*[1-x-z]^-1
+       + 2*ln([1-z])*z
+       - 6*ln([1-z])*z^2*[1-x-z]^-2
+       + 7*ln([1-z])*z^2*[1-x-z]^-1
+       - 2*ln([1-z])*z^2
+       + 5*ln([1-z])*z^3*[1-x-z]^-2
+       - 4*ln([1-z])*z^3*[1-x-z]^-1
+       - 2*ln([1-z])*z^4*[1-x-z]^-2 ) );
 
 id FTC2g2qM      = (  + NC^-1 * (  - 15/8
        - 23/16*z^-1
@@ -14437,10 +14407,10 @@ id FTC2g2qM      = (  + NC^-1 * (  - 15/8
        + Li2([1-x]*z^-1)*x^2*[1-z]^-1
        - 2*Li2([1-x]*z^-1)*x^2 ) );
 
-id FTC2g2qMANoW      = (  - 2
-       + 2*x
-       - 2*ln(x)*x^2
-       + 2*ln([1-x])*x^2 );
+id FTC2g2qMANoW      = (  - 1
+       + x
+       - ln(x)*x^2
+       + ln([1-x])*x^2 );
 
 id FTC2g2gM      = (  + NC^-1 * ( 1/4
        + 13/8*z^-1
@@ -20824,33 +20794,24 @@ id FLC2q2qMFcon2      = (  + NC^-1 * (  - 3/4
        + 9/8*InvTanInt(sqrtxz3)*x*z*sqrtxz3
        + 5/16*InvTanInt(sqrtxz3)*x^2*sqrtxz3 ) );
 
-id FLC2q2qMANoW      = (  + NC^-1 * ( 6
+id FLC2q2qMANoW      = (  + NC^-1 * ( 4
        - 4*poly2^-1
-       - 2*z*[z-x]^-1
        + 12*z*poly2^-1
-       - 18*z
-       + 6*z^2*[z-x]^-1
+       - 12*z
        - 8*z^2*poly2^-1
-       + 12*z^2
-       - 4*z^3*[z-x]^-1
+       + 8*z^2
        - 4*x*poly2^-1
        + 28*x*z*poly2^-1
        - 56*x*z^2*poly2^-1
        + 32*x*z^3*poly2^-1
-       + 2*ln(x)*z*[z-x]^-1
        - 72*ln(x)*z*poly2^-2
        + 64*ln(x)*z*poly2^-1
-       + 12*ln(x)*z
-       - 2*ln(x)*z^2*[z-x]^-2
-       - 10*ln(x)*z^2*[z-x]^-1
+       + 8*ln(x)*z
        + 312*ln(x)*z^2*poly2^-2
        - 304*ln(x)*z^2*poly2^-1
-       - 12*ln(x)*z^2
-       + 6*ln(x)*z^3*[z-x]^-2
-       + 8*ln(x)*z^3*[z-x]^-1
+       - 8*ln(x)*z^2
        - 432*ln(x)*z^3*poly2^-2
        + 432*ln(x)*z^3*poly2^-1
-       - 4*ln(x)*z^4*[z-x]^-2
        + 192*ln(x)*z^4*poly2^-2
        - 192*ln(x)*z^4*poly2^-1
        + 4*ln(x)*x*poly2^-1
@@ -20908,20 +20869,14 @@ id FLC2q2qMANoW      = (  + NC^-1 * ( 6
        + 224*ln(x)*ln(1 + sqrtxz2 + x)*x*z^4*sqrtxz2^-1*poly2^-1
        - 4608*ln(x)*ln(1 + sqrtxz2 + x)*x*z^5*sqrtxz2^-1*poly2^-2
        + 1536*ln(x)*ln(1 + sqrtxz2 + x)*x*z^6*sqrtxz2^-1*poly2^-2
-       - 2*ln(z)*z*[z-x]^-1
        + 24*ln(z)*z*poly2^-2
        - 16*ln(z)*z*poly2^-1
-       - 12*ln(z)*z
-       + 2*ln(z)*z^2*[z-x]^-2
-       + 10*ln(z)*z^2*[z-x]^-1
+       - 8*ln(z)*z
        - 168*ln(z)*z^2*poly2^-2
        + 160*ln(z)*z^2*poly2^-1
-       + 12*ln(z)*z^2
-       - 6*ln(z)*z^3*[z-x]^-2
-       - 8*ln(z)*z^3*[z-x]^-1
+       + 8*ln(z)*z^2
        + 336*ln(z)*z^3*poly2^-2
        - 336*ln(z)*z^3*poly2^-1
-       + 4*ln(z)*z^4*[z-x]^-2
        - 192*ln(z)*z^4*poly2^-2
        + 192*ln(z)*z^4*poly2^-1
        + 24*ln(z)*x*z*poly2^-2
@@ -21026,33 +20981,24 @@ id FLC2q2qMANoW      = (  + NC^-1 * ( 6
        - 1536*Li2(1/2 + 1/2*sqrtxz2 - 1/2*x)*x*z^6*sqrtxz2^-1*poly2^-2
        )
 
-       + NC * (  - 6
+       + NC * (  - 4
        + 4*poly2^-1
-       + 2*z*[z-x]^-1
        - 12*z*poly2^-1
-       + 18*z
-       - 6*z^2*[z-x]^-1
+       + 12*z
        + 8*z^2*poly2^-1
-       - 12*z^2
-       + 4*z^3*[z-x]^-1
+       - 8*z^2
        + 4*x*poly2^-1
        - 28*x*z*poly2^-1
        + 56*x*z^2*poly2^-1
        - 32*x*z^3*poly2^-1
-       - 2*ln(x)*z*[z-x]^-1
        + 72*ln(x)*z*poly2^-2
        - 64*ln(x)*z*poly2^-1
-       - 12*ln(x)*z
-       + 2*ln(x)*z^2*[z-x]^-2
-       + 10*ln(x)*z^2*[z-x]^-1
+       - 8*ln(x)*z
        - 312*ln(x)*z^2*poly2^-2
        + 304*ln(x)*z^2*poly2^-1
-       + 12*ln(x)*z^2
-       - 6*ln(x)*z^3*[z-x]^-2
-       - 8*ln(x)*z^3*[z-x]^-1
+       + 8*ln(x)*z^2
        + 432*ln(x)*z^3*poly2^-2
        - 432*ln(x)*z^3*poly2^-1
-       + 4*ln(x)*z^4*[z-x]^-2
        - 192*ln(x)*z^4*poly2^-2
        + 192*ln(x)*z^4*poly2^-1
        - 4*ln(x)*x*poly2^-1
@@ -21110,20 +21056,14 @@ id FLC2q2qMANoW      = (  + NC^-1 * ( 6
        - 224*ln(x)*ln(1 + sqrtxz2 + x)*x*z^4*sqrtxz2^-1*poly2^-1
        + 4608*ln(x)*ln(1 + sqrtxz2 + x)*x*z^5*sqrtxz2^-1*poly2^-2
        - 1536*ln(x)*ln(1 + sqrtxz2 + x)*x*z^6*sqrtxz2^-1*poly2^-2
-       + 2*ln(z)*z*[z-x]^-1
        - 24*ln(z)*z*poly2^-2
        + 16*ln(z)*z*poly2^-1
-       + 12*ln(z)*z
-       - 2*ln(z)*z^2*[z-x]^-2
-       - 10*ln(z)*z^2*[z-x]^-1
+       + 8*ln(z)*z
        + 168*ln(z)*z^2*poly2^-2
        - 160*ln(z)*z^2*poly2^-1
-       - 12*ln(z)*z^2
-       + 6*ln(z)*z^3*[z-x]^-2
-       + 8*ln(z)*z^3*[z-x]^-1
+       - 8*ln(z)*z^2
        - 336*ln(z)*z^3*poly2^-2
        + 336*ln(z)*z^3*poly2^-1
-       - 4*ln(z)*z^4*[z-x]^-2
        + 192*ln(z)*z^4*poly2^-2
        - 192*ln(z)*z^4*poly2^-1
        - 24*ln(z)*x*z*poly2^-2
@@ -22287,54 +22227,54 @@ id FLC2q2gM      = (  + NC^-2 * ( 1
        + 2*Li2(z)*x
        + 10*Li2(z)*x*z );
 
-id FLC2q2gMANoW      = (  + NC^-1 * ( 4*z*[1-x-z]^-1
-       - 4*z
-       - 12*z^2*[1-x-z]^-1
-       + 8*z^2
-       + 8*z^3*[1-x-z]^-1
-       + 4*ln(x)*z*[1-x-z]^-2
-       - 12*ln(x)*z*[1-x-z]^-1
-       + 8*ln(x)*z
-       - 16*ln(x)*z^2*[1-x-z]^-2
-       + 28*ln(x)*z^2*[1-x-z]^-1
-       - 8*ln(x)*z^2
-       + 20*ln(x)*z^3*[1-x-z]^-2
-       - 16*ln(x)*z^3*[1-x-z]^-1
-       - 8*ln(x)*z^4*[1-x-z]^-2
-       - 4*ln([1-z])*z*[1-x-z]^-2
-       + 12*ln([1-z])*z*[1-x-z]^-1
-       - 8*ln([1-z])*z
-       + 16*ln([1-z])*z^2*[1-x-z]^-2
-       - 28*ln([1-z])*z^2*[1-x-z]^-1
-       + 8*ln([1-z])*z^2
-       - 20*ln([1-z])*z^3*[1-x-z]^-2
-       + 16*ln([1-z])*z^3*[1-x-z]^-1
-       + 8*ln([1-z])*z^4*[1-x-z]^-2
+id FLC2q2gMANoW      = (  + NC^-1 * ( 2*z*[1-x-z]^-1
+       - 2*z
+       - 6*z^2*[1-x-z]^-1
+       + 4*z^2
+       + 4*z^3*[1-x-z]^-1
+       + 2*ln(x)*z*[1-x-z]^-2
+       - 6*ln(x)*z*[1-x-z]^-1
+       + 4*ln(x)*z
+       - 8*ln(x)*z^2*[1-x-z]^-2
+       + 14*ln(x)*z^2*[1-x-z]^-1
+       - 4*ln(x)*z^2
+       + 10*ln(x)*z^3*[1-x-z]^-2
+       - 8*ln(x)*z^3*[1-x-z]^-1
+       - 4*ln(x)*z^4*[1-x-z]^-2
+       - 2*ln([1-z])*z*[1-x-z]^-2
+       + 6*ln([1-z])*z*[1-x-z]^-1
+       - 4*ln([1-z])*z
+       + 8*ln([1-z])*z^2*[1-x-z]^-2
+       - 14*ln([1-z])*z^2*[1-x-z]^-1
+       + 4*ln([1-z])*z^2
+       - 10*ln([1-z])*z^3*[1-x-z]^-2
+       + 8*ln([1-z])*z^3*[1-x-z]^-1
+       + 4*ln([1-z])*z^4*[1-x-z]^-2
        )
 
-       + NC * (  - 4*z*[1-x-z]^-1
-       + 4*z
-       + 12*z^2*[1-x-z]^-1
-       - 8*z^2
-       - 8*z^3*[1-x-z]^-1
-       - 4*ln(x)*z*[1-x-z]^-2
-       + 12*ln(x)*z*[1-x-z]^-1
-       - 8*ln(x)*z
-       + 16*ln(x)*z^2*[1-x-z]^-2
-       - 28*ln(x)*z^2*[1-x-z]^-1
-       + 8*ln(x)*z^2
-       - 20*ln(x)*z^3*[1-x-z]^-2
-       + 16*ln(x)*z^3*[1-x-z]^-1
-       + 8*ln(x)*z^4*[1-x-z]^-2
-       + 4*ln([1-z])*z*[1-x-z]^-2
-       - 12*ln([1-z])*z*[1-x-z]^-1
-       + 8*ln([1-z])*z
-       - 16*ln([1-z])*z^2*[1-x-z]^-2
-       + 28*ln([1-z])*z^2*[1-x-z]^-1
-       - 8*ln([1-z])*z^2
-       + 20*ln([1-z])*z^3*[1-x-z]^-2
-       - 16*ln([1-z])*z^3*[1-x-z]^-1
-       - 8*ln([1-z])*z^4*[1-x-z]^-2 ) );
+       + NC * (  - 2*z*[1-x-z]^-1
+       + 2*z
+       + 6*z^2*[1-x-z]^-1
+       - 4*z^2
+       - 4*z^3*[1-x-z]^-1
+       - 2*ln(x)*z*[1-x-z]^-2
+       + 6*ln(x)*z*[1-x-z]^-1
+       - 4*ln(x)*z
+       + 8*ln(x)*z^2*[1-x-z]^-2
+       - 14*ln(x)*z^2*[1-x-z]^-1
+       + 4*ln(x)*z^2
+       - 10*ln(x)*z^3*[1-x-z]^-2
+       + 8*ln(x)*z^3*[1-x-z]^-1
+       + 4*ln(x)*z^4*[1-x-z]^-2
+       + 2*ln([1-z])*z*[1-x-z]^-2
+       - 6*ln([1-z])*z*[1-x-z]^-1
+       + 4*ln([1-z])*z
+       - 8*ln([1-z])*z^2*[1-x-z]^-2
+       + 14*ln([1-z])*z^2*[1-x-z]^-1
+       - 4*ln([1-z])*z^2
+       + 10*ln([1-z])*z^3*[1-x-z]^-2
+       - 8*ln([1-z])*z^3*[1-x-z]^-1
+       - 4*ln([1-z])*z^4*[1-x-z]^-2 ) );
 
 id FLC2g2qM      = (  + NC^-1 * (  - 1/2*z^-1
        - 2*z*poly2^-1
@@ -23361,11 +23301,11 @@ id FLC2g2qM      = (  + NC^-1 * (  - 1/2*z^-1
        + 4*Li2([1-x]*z^-1)*x
        - 4*Li2([1-x]*z^-1)*x^2 ) );
 
-id FLC2g2qMANoW      = (  - 4*x
-       - 4*ln(x)*x
-       + 4*ln(x)*x^2
-       + 4*ln([1-x])*x
-       - 4*ln([1-x])*x^2 );
+id FLC2g2qMANoW      = (  - 2*x
+       - 2*ln(x)*x
+       + 2*ln(x)*x^2
+       + 2*ln([1-x])*x
+       - 2*ln([1-x])*x^2 );
 
 id FLC2g2gM      = (  + NC^-1 * ( 4
        - 4*z
@@ -31260,30 +31200,21 @@ id F3C2q2qMFcon1      = (  + NC^-2 * ( 7/2
        - 3/2*InvTanInt(sqrtxz3)*z*sqrtxz3
        - 3/2*InvTanInt(sqrtxz3)*x*sqrtxz3 );
 
-id F3C2q2qMANoW      = (  + NC^-1 * (  - 3/2
-       - [z-x]^-1
+id F3C2q2qMANoW      = (  + NC^-1 * (  - 1
        + poly2^-1
-       + 3/2*z*[z-x]^-1
        - 2*z*poly2^-1
-       + 5/2*z
-       - 3/2*z^2*[z-x]^-1
+       + 3/2*z
        + 3*x*poly2^-1
        - 10*x*z*poly2^-1
        + 8*x*z^2*poly2^-1
-       + 3/2*ln(x)
-       + ln(x)*[z-x]^-1
+       + ln(x)
        - 6*ln(x)*poly2^-2
        + 5*ln(x)*poly2^-1
-       - ln(x)*z*[z-x]^-2
-       - 2*ln(x)*z*[z-x]^-1
        + 42*ln(x)*z*poly2^-2
        - 40*ln(x)*z*poly2^-1
-       - 3*ln(x)*z
-       + 3/2*ln(x)*z^2*[z-x]^-2
-       + 5/2*ln(x)*z^2*[z-x]^-1
+       - 2*ln(x)*z
        - 84*ln(x)*z^2*poly2^-2
        + 84*ln(x)*z^2*poly2^-1
-       - 3/2*ln(x)*z^3*[z-x]^-2
        + 48*ln(x)*z^3*poly2^-2
        - 48*ln(x)*z^3*poly2^-1
        - 6*ln(x)*x*poly2^-2
@@ -31336,19 +31267,13 @@ id F3C2q2qMANoW      = (  + NC^-1 * (  - 3/2
        + 56*ln(x)*ln(1 + sqrtxz2 + x)*x*z^3*sqrtxz2^-1*poly2^-1
        - 960*ln(x)*ln(1 + sqrtxz2 + x)*x*z^4*sqrtxz2^-1*poly2^-2
        + 384*ln(x)*ln(1 + sqrtxz2 + x)*x*z^5*sqrtxz2^-1*poly2^-2
-       - ln(z)
-       - ln(z)*[z-x]^-1
+       - 1/2*ln(z)
        + ln(z)*poly2^-1
-       + ln(z)*z*[z-x]^-2
-       + 2*ln(z)*z*[z-x]^-1
        - 18*ln(z)*z*poly2^-2
        + 16*ln(z)*z*poly2^-1
-       + 3*ln(z)*z
-       - 3/2*ln(z)*z^2*[z-x]^-2
-       - 5/2*ln(z)*z^2*[z-x]^-1
+       + 2*ln(z)*z
        + 60*ln(z)*z^2*poly2^-2
        - 60*ln(z)*z^2*poly2^-1
-       + 3/2*ln(z)*z^3*[z-x]^-2
        - 48*ln(z)*z^3*poly2^-2
        + 48*ln(z)*z^3*poly2^-1
        + 3*ln(z)*x*poly2^-1
@@ -31444,30 +31369,21 @@ id F3C2q2qMANoW      = (  + NC^-1 * (  - 3/2
        - 384*Li2(1/2 + 1/2*sqrtxz2 - 1/2*x)*x*z^5*sqrtxz2^-1*poly2^-2
        )
 
-       + NC * ( 3/2
-       + [z-x]^-1
+       + NC * ( 1
        - poly2^-1
-       - 3/2*z*[z-x]^-1
        + 2*z*poly2^-1
-       - 5/2*z
-       + 3/2*z^2*[z-x]^-1
+       - 3/2*z
        - 3*x*poly2^-1
        + 10*x*z*poly2^-1
        - 8*x*z^2*poly2^-1
-       - 3/2*ln(x)
-       - ln(x)*[z-x]^-1
+       - ln(x)
        + 6*ln(x)*poly2^-2
        - 5*ln(x)*poly2^-1
-       + ln(x)*z*[z-x]^-2
-       + 2*ln(x)*z*[z-x]^-1
        - 42*ln(x)*z*poly2^-2
        + 40*ln(x)*z*poly2^-1
-       + 3*ln(x)*z
-       - 3/2*ln(x)*z^2*[z-x]^-2
-       - 5/2*ln(x)*z^2*[z-x]^-1
+       + 2*ln(x)*z
        + 84*ln(x)*z^2*poly2^-2
        - 84*ln(x)*z^2*poly2^-1
-       + 3/2*ln(x)*z^3*[z-x]^-2
        - 48*ln(x)*z^3*poly2^-2
        + 48*ln(x)*z^3*poly2^-1
        + 6*ln(x)*x*poly2^-2
@@ -31520,19 +31436,13 @@ id F3C2q2qMANoW      = (  + NC^-1 * (  - 3/2
        - 56*ln(x)*ln(1 + sqrtxz2 + x)*x*z^3*sqrtxz2^-1*poly2^-1
        + 960*ln(x)*ln(1 + sqrtxz2 + x)*x*z^4*sqrtxz2^-1*poly2^-2
        - 384*ln(x)*ln(1 + sqrtxz2 + x)*x*z^5*sqrtxz2^-1*poly2^-2
-       + ln(z)
-       + ln(z)*[z-x]^-1
+       + 1/2*ln(z)
        - ln(z)*poly2^-1
-       - ln(z)*z*[z-x]^-2
-       - 2*ln(z)*z*[z-x]^-1
        + 18*ln(z)*z*poly2^-2
        - 16*ln(z)*z*poly2^-1
-       - 3*ln(z)*z
-       + 3/2*ln(z)*z^2*[z-x]^-2
-       + 5/2*ln(z)*z^2*[z-x]^-1
+       - 2*ln(z)*z
        - 60*ln(z)*z^2*poly2^-2
        + 60*ln(z)*z^2*poly2^-1
-       - 3/2*ln(z)*z^3*[z-x]^-2
        + 48*ln(z)*z^3*poly2^-2
        - 48*ln(z)*z^3*poly2^-1
        - 3*ln(z)*x*poly2^-1
@@ -35669,54 +35579,54 @@ id F3C2q2gM      = (  + NC^-2 * (  - 75/8
        + 3/2*Li2(z)*x*z^-1
        + Li2(z)*x );
 
-id F3C2q2gMANoW      = (  + NC^-1 * ( 1
-       - 2*[1-x-z]^-1
-       + 3*z*[1-x-z]^-1
-       - 2*z
-       - 3*z^2*[1-x-z]^-1
-       - ln(x)
-       - 2*ln(x)*[1-x-z]^-2
-       + 3*ln(x)*[1-x-z]^-1
-       + 5*ln(x)*z*[1-x-z]^-2
-       - 6*ln(x)*z*[1-x-z]^-1
-       + 2*ln(x)*z
-       - 6*ln(x)*z^2*[1-x-z]^-2
-       + 5*ln(x)*z^2*[1-x-z]^-1
-       + 3*ln(x)*z^3*[1-x-z]^-2
-       + ln([1-z])
-       + 2*ln([1-z])*[1-x-z]^-2
-       - 3*ln([1-z])*[1-x-z]^-1
-       - 5*ln([1-z])*z*[1-x-z]^-2
-       + 6*ln([1-z])*z*[1-x-z]^-1
-       - 2*ln([1-z])*z
-       + 6*ln([1-z])*z^2*[1-x-z]^-2
-       - 5*ln([1-z])*z^2*[1-x-z]^-1
-       - 3*ln([1-z])*z^3*[1-x-z]^-2
+id F3C2q2gMANoW      = (  + NC^-1 * ( 1/2
+       - [1-x-z]^-1
+       + 3/2*z*[1-x-z]^-1
+       - z
+       - 3/2*z^2*[1-x-z]^-1
+       - 1/2*ln(x)
+       - ln(x)*[1-x-z]^-2
+       + 3/2*ln(x)*[1-x-z]^-1
+       + 5/2*ln(x)*z*[1-x-z]^-2
+       - 3*ln(x)*z*[1-x-z]^-1
+       + ln(x)*z
+       - 3*ln(x)*z^2*[1-x-z]^-2
+       + 5/2*ln(x)*z^2*[1-x-z]^-1
+       + 3/2*ln(x)*z^3*[1-x-z]^-2
+       + 1/2*ln([1-z])
+       + ln([1-z])*[1-x-z]^-2
+       - 3/2*ln([1-z])*[1-x-z]^-1
+       - 5/2*ln([1-z])*z*[1-x-z]^-2
+       + 3*ln([1-z])*z*[1-x-z]^-1
+       - ln([1-z])*z
+       + 3*ln([1-z])*z^2*[1-x-z]^-2
+       - 5/2*ln([1-z])*z^2*[1-x-z]^-1
+       - 3/2*ln([1-z])*z^3*[1-x-z]^-2
        )
 
-       + NC * (  - 1
-       + 2*[1-x-z]^-1
-       - 3*z*[1-x-z]^-1
-       + 2*z
-       + 3*z^2*[1-x-z]^-1
-       + ln(x)
-       + 2*ln(x)*[1-x-z]^-2
-       - 3*ln(x)*[1-x-z]^-1
-       - 5*ln(x)*z*[1-x-z]^-2
-       + 6*ln(x)*z*[1-x-z]^-1
-       - 2*ln(x)*z
-       + 6*ln(x)*z^2*[1-x-z]^-2
-       - 5*ln(x)*z^2*[1-x-z]^-1
-       - 3*ln(x)*z^3*[1-x-z]^-2
-       - ln([1-z])
-       - 2*ln([1-z])*[1-x-z]^-2
-       + 3*ln([1-z])*[1-x-z]^-1
-       + 5*ln([1-z])*z*[1-x-z]^-2
-       - 6*ln([1-z])*z*[1-x-z]^-1
-       + 2*ln([1-z])*z
-       - 6*ln([1-z])*z^2*[1-x-z]^-2
-       + 5*ln([1-z])*z^2*[1-x-z]^-1
-       + 3*ln([1-z])*z^3*[1-x-z]^-2 ) );
+       + NC * (  - 1/2
+       + [1-x-z]^-1
+       - 3/2*z*[1-x-z]^-1
+       + z
+       + 3/2*z^2*[1-x-z]^-1
+       + 1/2*ln(x)
+       + ln(x)*[1-x-z]^-2
+       - 3/2*ln(x)*[1-x-z]^-1
+       - 5/2*ln(x)*z*[1-x-z]^-2
+       + 3*ln(x)*z*[1-x-z]^-1
+       - ln(x)*z
+       + 3*ln(x)*z^2*[1-x-z]^-2
+       - 5/2*ln(x)*z^2*[1-x-z]^-1
+       - 3/2*ln(x)*z^3*[1-x-z]^-2
+       - 1/2*ln([1-z])
+       - ln([1-z])*[1-x-z]^-2
+       + 3/2*ln([1-z])*[1-x-z]^-1
+       + 5/2*ln([1-z])*z*[1-x-z]^-2
+       - 3*ln([1-z])*z*[1-x-z]^-1
+       + ln([1-z])*z
+       - 3*ln([1-z])*z^2*[1-x-z]^-2
+       + 5/2*ln([1-z])*z^2*[1-x-z]^-1
+       + 3/2*ln([1-z])*z^3*[1-x-z]^-2 ) );
 
 id F3C2g2qM      = (  + NC^-1 * ( 1/8
        + 7/16*z^-1
@@ -38335,12 +38245,12 @@ id F3C2g2qM      = (  + NC^-1 * ( 1/8
        - Li2([1-x]*z^-1)*x^2*z^-1
        + Li2([1-x]*z^-1)*x^2*[1-z]^-1 ) );
 
-id F3C2g2qMANoW      = (  - x
-       + 2*x*z
-       + ln(x)*x^2
-       - 2*ln(x)*x^2*z
-       - ln([1-x])*x^2
-       + 2*ln([1-x])*x^2*z );
+id F3C2g2qMANoW      = (  - 1/2*x
+       + x*z
+       + 1/2*ln(x)*x^2
+       - ln(x)*x^2*z
+       - 1/2*ln([1-x])*x^2
+       + ln([1-x])*x^2*z );
 
 id F3C2q2qpM1      = (  + NC^-1 * (  - 1/3
        + 5/72*z^-1

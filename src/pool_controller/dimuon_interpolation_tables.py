@@ -19,6 +19,7 @@ import gzip
 from pathlib import Path
 from utils.arg_modes import RunMode
 
+# Adapted from EKO's `lambertgrid` (https://github.com/NNPDF/eko/blob/master/src/eko/interpolation.py), licensed under GPL-3.0
 def lambertgrid(x_min, x_max, n_points):
 	def direct_relation(x):
 		return 5 * (1 - x) - np.log(x)

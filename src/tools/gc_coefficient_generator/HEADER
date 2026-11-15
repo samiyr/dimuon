@@ -1,0 +1,54 @@
+*************************************************************************************
+** EW SIDIS coefficient functions up to NNLO from:                                   
+**                                                                                   
+** Neutral and Charged Current Semi-Inclusive Deep-Inelastic Scattering at NNLO QCD  
+** L. Bonino, T. Gehrmann, M. Loechner, K. Schoenwald and G. Stagnitto               
+**                                                                                   
+** FORM readable format                                                              
+**                                                                                   
+** Notation, according to eq.(8) of the paper:                                       
+**           [SF]C[order][a2b][label] with                                           
+**           - SF: structure function, e.g. FT, FL, F3                               
+**           - order: 0 = LO, 1 = NLO, 2 = NNLO                                      
+**           - a2b: means a -> b, for a and b partons                                
+**           - label: - M:    MS-bar (M-scheme)                                      
+**                    - A:    anomaly insertion                                      
+**                    - Fcon: flavour conserving in charged current                  
+**                    - NoW:  not present in charged current                         
+**                                                                                   
+** Symbols:                                                                          
+**          NC = 3: number of colours                                                
+**          NF    : number of active flavours                                        
+**                                                                                   
+** Scales:                                                                           
+**         LMUR = ln(muR^2/Q2)                                                       
+**         LMUF = ln(muF^2/Q2)                                                       
+**         LMUA = ln(muA^2/Q2)                                                       
+**         with Q2 = -q2, invariant mass of the photon                               
+**              muR: renormalisation scale                                           
+**              muF: initial-state factorisation scale                               
+**              muA: final-state factorisation scale                                 
+**                                                                                   
+** Functions:                                                                        
+**            Li2(a) = PolyLog(2,a)                                                  
+**            Li3(a) = PolyLog(3,a)                                                  
+**            sqrtxz1 = sqrt(1 - 2*z + z*z + 4*x*z)                                  
+**            poly2   = 1 + 2*x + x*x - 4*x*z                                        
+**            sqrtxz2 = sqrt(poly2)                                                  
+**            sqrtxz3 = sqrt(x/z)                                                    
+**            InvTanInt(x) = int_0^x dt arctan(t)/t : Arctangent integral            
+**            T(region): Heaviside Theta function                                    
+**                                                                                   
+** Distributions:                                                                    
+**           Dd([1-x]) is the Dirac delta function of argument [1-x]                 
+**           Dn(a,[1-x]) = (ln^a(1-x)/(1-x))_+ (plus-prescription) for a = 0,1,2,3   
+**           same for z                                                              
+**                                                                                   
+** Kinematic regions in (x,z)-plane: as defined in 2201.06982                        
+**           ui = Ui for i = 1,2,3,4                                                 
+**           ri = Ri, ti = Ti for i = 1,2                                            
+**           Ri, Ti and Ui defined in eq. (5.9), (5.12) and (5.16)                   
+**                                                                                   
+** Constants: pi, zeta3 = Zeta(3) with Zeta Riemann Zeta function, rln2 = ln(2)      
+**                                                                                   
+*************************************************************************************

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Modified for dimuon: includes "detail/concepts.hpp" instead of <beman/slice_view/detail/concepts.hpp>
 
 #ifndef BEMAN_SLICE_VIEW_HPP
 #define BEMAN_SLICE_VIEW_HPP

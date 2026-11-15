@@ -1,6 +1,6 @@
 # SIDIS coefficient generator
 
-The Mathematica code in `sidis_coefficients.wl` includes everything needed to generate the `gc` coefficients from a FORM file, as well as to make the reference tables for testing. The FORM file `ancillary_EW.frm` is taken from [[JHEP 10 (2025) 016]](https://doi.org/10.1007/JHEP10(2025)016) and modified slightly (comments removed as the parser doesn't support that).
+The Mathematica code in `sidis_coefficients.wl` includes everything needed to generate the `gc` coefficients from a FORM file, as well as to make the reference tables for testing. The FORM file `ancillary_EW.frm` is taken from [[JHEP 10 (2025) 016]](https://doi.org/10.1007/JHEP10(2025)016) (published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and modified slightly (comments extracted to `HEADER` as the parser doesn't support reading it).
 
 ## Generating coefficients
 
